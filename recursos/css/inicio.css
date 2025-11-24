@@ -6,6 +6,9 @@
 
 html, body {
     height: 100%;
+     margin: 0; /* Elimina cualquier margen predeterminado */
+    padding: 0; /* Elimina cualquier relleno predeterminado */
+    overflow: hidden; /* Evita el desplazamiento si algo excede el tamaño */
 }
 
 body {
@@ -31,8 +34,8 @@ body {
     align-items: center;
 }
 
-.text-content {
-    text-align: center;
+.btn-text {
+    text-align: left; /* Justifica todo el contenido a la izquierda */
 }
 .text-content h1 {
     position: absolute;
@@ -53,7 +56,7 @@ body {
        
     width: 455px;
     height: 45px;
-
+    margin-left: 10%;
   
     opacity: 0.50;
     font-family: "Inter", sans-serif;
@@ -70,4 +73,35 @@ body {
     left: calc(708px * (1920 / 1280)); /* Ajusta la posición horizontal */
     transform: rotate(0deg); /* Mantiene el ángulo original */
     opacity: 1; /* Mantiene la opacidad original */
+}
+/* Estilos para el botón */
+.text-content button {
+    position: absolute;
+    width: calc(400px * (1920 / 1280)); /* Ajusta el ancho proporcionalmente */
+    height: calc(50px * (1080 / 720)); /* Ajusta la altura proporcionalmente */
+    top: calc(400px * (1080 / 720)); /* Ajusta la posición vertical */
+    left: calc(172px * (1920 / 1280)); /* Ajusta la posición horizontal */
+    font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
+    font-weight: 500; /* Medium */
+    font-size: calc(27px * (1920 / 1280)); /* Escala proporcionalmente el tamaño de fuente */
+    line-height: 100%; /* Mantiene el interlineado */
+    letter-spacing: 0%; /* Sin espaciado adicional entre letras */
+    text-align: center; /* Centra el texto dentro del botón */
+    color: #fff; /* Color del texto */
+    background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%); /* Fondo degradado */
+    border: none; /* Sin bordes */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: all 0.2s ease; /* Suaviza las transiciones */
+}
+
+/* Efecto al hacer clic */
+.text-content button:active {
+    transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
+    animation-duration: 0ms; /* Animación instantánea */
+}
+
+/* Efecto al pasar el mouse */
+.text-content button:hover {
+    background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%); /* Invierte el degradado */
 }
