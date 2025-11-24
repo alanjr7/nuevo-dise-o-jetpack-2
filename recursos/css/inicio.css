@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-image: url("../imagenes/fondo.png");
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center center; /* Centra la imagen en ambas direcciones */
+    height: 100vh; /* Asegura que el fondo ocupe toda la altura de la ventana */
+    font-family: Arial, sans-serif;
+    color: #000;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+}
+
+.section {
+    flex: 1; /* Cada sección ocupará el 50% del ancho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-content {
+    text-align: center;
+}
+.text-content h1 {
+    position: absolute;
+    width: calc(372px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
+    height: calc(77px * (1080 / 720)); /* Escala proporcionalmente la altura */
+    top: calc(229px * (1080 / 720)); /* Ajusta la posición vertical */
+    left: calc(172px * (1920 / 1280)); /* Ajusta la posición horizontal */
+    font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
+    font-weight: 700; /* Negrita */
+    font-size: calc(64px * (1920 / 1280)); /* Escala proporcionalmente el tamaño de fuente */
+    line-height: 100%; /* Mantiene el interlineado */
+    letter-spacing: 0%; /* Sin espaciado adicional entre letras */
+    text-align: left; /* Alineación del texto */
+    color: #000; /* Color del texto */
+    opacity: 1; /* Mantiene la opacidad */
+}
+.text-content p {
+       
+    width: 455px;
+    height: 45px;
+
+  
+    opacity: 0.50;
+    font-family: "Inter", sans-serif;
+    font-weight: 500; /* Medium */
+    font-size: 27px;
+    line-height: 1;   /* 100% */
+    letter-spacing: 0;
+}
+.robot {
+    position: absolute;
+    width: calc(496px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
+    height: calc(744px * (1080 / 720)); /* Escala proporcionalmente la altura */
+    top: calc(19px * (1080 / 720)); /* Ajusta la posición vertical */
+    left: calc(708px * (1920 / 1280)); /* Ajusta la posición horizontal */
+    transform: rotate(0deg); /* Mantiene el ángulo original */
+    opacity: 1; /* Mantiene la opacidad original */
+}
