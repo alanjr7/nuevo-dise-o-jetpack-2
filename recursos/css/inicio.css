@@ -19,6 +19,11 @@ body {
     height: 100vh; /* Asegura que el fondo ocupe toda la altura de la ventana */
     font-family: Arial, sans-serif;
     color: #000;
+       opacity: 0;
+    transition: opacity 0.6s;
+}
+body.loaded {
+    opacity: 1;
 }
 .container {
     display: flex;
@@ -53,9 +58,11 @@ body {
     opacity: 1; /* Mantiene la opacidad */
 }
 .text-content p {
-       
-    width: 455px;
-    height: 45px;
+     position: absolute;
+    width:  calc(455px * (1920 / 1280));
+    height:calc(45px * (1080 / 720)) ;
+     top: calc(300px * (1080 / 720)); /* Ajusta la posición vertical */
+    left: calc(120px * (1920 / 1280)); /* Ajusta la posición horizontal */
     margin-left: 5%;
   
     opacity: 0.50;
@@ -132,3 +139,4 @@ body {
     color: #ffffff; /* Color del texto */
     opacity: 1; /* Mantiene la opacidad */
 }
+

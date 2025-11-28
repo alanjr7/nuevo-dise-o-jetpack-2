@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+     margin: 0; /* Elimina cualquier margen predeterminado */
+    padding: 0; /* Elimina cualquier relleno predeterminado */
+    overflow: hidden; /* Evita el desplazamiento si algo excede el tamaño */
+}
+
+body {
+    background-image: url("../imagenes/fondo.png");
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center center; /* Centra la imagen en ambas direcciones */
+    height: 100vh; /* Asegura que el fondo ocupe toda la altura de la ventana */
+    font-family: Arial, sans-serif;
+    color: #000;
+       opacity: 0;
+    transition: opacity 0.6s;
+}
+body.loaded {
+    opacity: 1;
+}
+/* Contenedor principal de la aplicación */
+.app-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+}
+
+/* Fondo de la ciudad (Posición absoluta para quedar detrás) */
+.city-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Ajusta la ruta de tu imagen de fondo */
+    background-image: url('../imagenes/fondo.png'); 
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2; /* Ajusta la opacidad si es necesario */
+    z-index: 0;
+}
+
+/* Logo (Posición absoluta para la esquina) */
+.logo-container {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+}
+
+/* --- ESTRUCTURA FLEXBOX PRINCIPAL (75% / 25%) --- */
+
+/* Contenedor que divide la pantalla */
+.split-container {
+    position: relative;
+    z-index: 1; /* Por encima del fondo */
+    display: flex; /* Activa Flexbox layout */
+    width: 100%;
+    height: 100%; /* Ocupa toda la altura */
+
+}
+
+/* COLUMNA IZQUIERDA (75%) */
+.main-content-left {
+    width: 55%; /* Ocupa el 75% del ancho */
+    display: flex;
+    flex-direction: column; /* Elementos uno debajo del otro */
+    justify-content: center; /* Centrado verticalmente */
+    align-items: center; /* Centrado horizontalmente */
+    padding: 20px;
+}
+
+/* COLUMNA DERECHA (25%) */
+.robot-container-right {
+    width: 45%; /* Ocupa el 25% del ancho */
+    display: flex;
+    justify-content: center; /* Centrado horizontal de la imagen */
+    align-items: center; /* Centrado vertical de la imagen */
+    padding: 20px;
+}
+
+/* --- ESTILOS DE LOS ELEMENTOS INTERNOS --- */
+
+/* Título */
+.title {
+    width: 100%;
+    font-size: 48px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Grupo de entrada */
+.input-group {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    /* Ancho fijo para coincidir con el teclado, centrado por flexbox padre */
+    width: 90%; 
+}
+
+.input-icon {
+    font-size: 28px;
+    color: #a0a0a0;
+    margin-right: 20px;
+}
+
+#recipient-name {
+    border: none;
+    outline: none;
+    font-size: 28px;
+    color: #333;
+    width: 100%;
+    background: transparent;
+}
+
+/* Teclado Virtual (Con tus dimensiones fijas, pero sin posición absoluta) */
+.keyboard-container {
+    background-color: #ffffff;
+    border-radius: 27px; /* Tu radio de borde */
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+    
+    /* Dimensiones fijas solicitadas */
+    width: 90%;
+    height: 400px;
+    /* NOTA: Hemos quitado position: absolute, top y left para que se centre automáticamente */
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex: 1; /* Para distribuir el espacio verticalmente */
+    align-items: center;
+}
+
+/* Teclas (Ajustadas para caber en el contenedor fijo) */
+.key {
+    flex: 1; /* Las teclas ocupan el espacio disponible */
+    height: 100%; /* Altura máxima de la fila */
+    max-height: 70px; /* Límite de altura para estética */
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.key:active {
+    background-color: #f0f0f0;
+    transform: scale(0.98);
+}
+
+.key-backspace {
+    flex: 1.5; /* Un poco más ancha */
+    background-color: #e0e0e0;
+    border-color: #000000;
+}
+
+.key-space {
+    flex: 5; /* Barra espaciadora muy ancha */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  
+}
+
+/* Botón Continuar */
+.continue-button {
+    width: 90%; /* Mismo ancho que input y teclado */
+    padding: 25px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+   
+ 
+  
+    font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
+    font-weight: 500; /* Medium */
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    color: #fff; /* Color del texto */
+    background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%); /* Fondo degradado */
+    border: none; /* Sin bordes */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: all 0.2s ease; /* Suaviza las transiciones */
+    /* NOTA: Hemos quitado position: absolute */
+}
+
+.continue-button:hover {
+    background-color: #234cb8;
+}
+
+/* Imagen del robot */
+.robot-img {
+    /* Hacemos que la imagen sea responsiva dentro de su columna del 25% */
+    max-width: 100%; 
+   
+    width: 90%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+}
