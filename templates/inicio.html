@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="recursos/css/inicio.css">
+    <!-- Usamos url_for para los recursos dentro de 'recursos' -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inicio.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
     <title>Inicio</title>
 </head>
@@ -14,7 +15,8 @@
                 <div class="text-content">
                     <h1>Crear orden</h1>
                     <p>Asignar orden al JPAC2</p>
-                    <button onclick="window.location.href='crear-orden.html'">Empezar -></button>
+                    <!-- Este enlace busca la función 'paso1_nombre' en app.py -->
+                    <button onclick="window.location.href='{{ url_for('paso1_nombre') }}'">Empezar -></button>
                 </div>
             </div>
         </div>
@@ -22,14 +24,14 @@
             <div class="soy-container">
                 <p class="text-soy">Soy JPAC2</p>
             </div>
-            <img class="robot" src="recursos/imagenes/robot.png" alt="Robot">
+            <!-- Imagen con url_for -->
+            <img class="robot" src="{{ url_for('static', filename='imagenes/robot.png') }}" alt="Robot">
         </div>
     </div>
+    <script>
+        window.onload = () => {
+            document.body.classList.add("loaded");
+        };
+    </script>
 </body>
-<script>
-window.onload = () => {
-    document.body.classList.add("loaded");
-};
-</script>
-
 </html>

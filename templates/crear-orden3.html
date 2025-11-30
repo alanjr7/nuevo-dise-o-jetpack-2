@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Entrega - Final</title>
+    <!-- CORREGIDO: Ruta directa a css/crear-orden3.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/crear-orden3.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="split-container">
+            
+            <div class="main-content-left">
+                <h1 class="title">Complete los detalles de entrega</h1>
+
+                <form action="{{ url_for('paso3_final') }}" method="POST">
+                    
+                    <div class="inputs-container">
+                        <div class="input-group" id="group-phone" onclick="selectInput('phone')">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="number" id="input-phone" name="confirm_phone" class="virtual-input" placeholder="Teléfono" value="{{ telefono }}" readonly>
+                        </div>
+
+                        <div class="input-group active-field" id="group-floor" onclick="selectInput('floor')">
+                            <i class="fas fa-building input-icon"></i>
+                            <input type="number" id="input-floor" name="floor_number" class="virtual-input" placeholder="Nro de piso" readonly required>
+                        </div>
+                    </div>
+
+                    <div class="keyboard-container">
+                        <div class="keyboard-row">
+                            <button type="button" class="key" onclick="pressKey('1')">1</button>
+                            <button type="button" class="key" onclick="pressKey('2')">2</button>
+                            <button type="button" class="key" onclick="pressKey('3')">3</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button type="button" class="key" onclick="pressKey('4')">4</button>
+                            <button type="button" class="key" onclick="pressKey('5')">5</button>
+                            <button type="button" class="key" onclick="pressKey('6')">6</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button type="button" class="key" onclick="pressKey('7')">7</button>
+                            <button type="button" class="key" onclick="pressKey('8')">8</button>
+                            <button type="button" class="key" onclick="pressKey('9')">9</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <div class="key-spacer"></div>
+                            <button type="button" class="key" onclick="pressKey('0')">0</button>
+                            <button type="button" class="key key-backspace" onclick="pressKey('back')">
+                                <i class="fas fa-backspace"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="continue-button">
+                        Continuar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="robot-container-right">
+                <!-- CORREGIDO: Ruta directa a imagenes/jpack2Lado.png -->
+                <img src="{{ url_for('static', filename='imagenes/jpack2Lado.png') }}" alt="Robot de entrega" class="robot-img" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <!-- CORREGIDO: Ruta directa a js/crear-orden3.js -->
+    <script src="{{ url_for('static', filename='js/crear-orden3.js') }}"> </script>
+</body>
+</html>

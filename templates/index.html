@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <!-- CSS cargado desde Flask (Asumiendo que styles.css está en static/css/) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<!-- El clic redirige a la ruta 'inicio' de Flask -->
+<body onclick="window.location.href='{{ url_for('inicio') }}'" style="cursor: pointer;">
+
+    <div class="video-container">
+        <video id="bg-video" autoplay muted loop playsinline>
+            <!-- Video cargado desde Flask -->
+            <source src="{{ url_for('static', filename='videos/Untitled design.mp4') }}" type="video/mp4">
+            Tu navegador no soporta video HTML5.
+        </video>
+    </div>
+    
+    <div class="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); z-index: -1;"></div>
+
+    <!-- Script opcional -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+     margin: 0; /* Elimina cualquier margen predeterminado */
+    padding: 0; /* Elimina cualquier relleno predeterminado */
+    overflow: hidden; /* Evita el desplazamiento si algo excede el tamaño */
+}
+
+body {
+    background-image: url("../imagenes/fondo.png");
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center center; /* Centra la imagen en ambas direcciones */
+    height: 100vh; /* Asegura que el fondo ocupe toda la altura de la ventana */
+    font-family: Arial, sans-serif;
+    color: #000;
+       opacity: 0;
+    transition: opacity 0.6s;
+}
+body.loaded {
+    opacity: 1;
+}
+
+        /* --- LAYOUT --- */
+        .app-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex; /* Aseguramos que el layout use flex */
+        }
+
+        .split-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* COLUMNA IZQUIERDA (75%) - Ajustado ancho según tu CSS original */
+        .main-content-left {
+            width: 55%; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* COLUMNA DERECHA (25%) */
+        .robot-container-right {
+            width: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- COMPONENTES VISUALES --- */
+
+        .title {
+            width: 100%;
+            font-size: 48px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* Contenedor flexible para poner los inputs en fila */
+        .inputs-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 20px;
+            width: 90%; 
+            margin-bottom: 30px;
+        }
+
+        /* Grupo de entrada (Estilo Original Restaurado) */
+        .input-group {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            /* Quitamos margin-bottom individual porque ahora están en contenedor */
+            margin-bottom: 0; 
+            flex: 1; /* Importante para que compartan espacio */
+            transition: all 0.3s ease;
+            border: 2px solid transparent; /* Borde base */
+            cursor: pointer;
+        }
+
+        /* ESTADO ACTIVO: Diseño solicitado */
+        .input-group.active-field {
+            border-color: #3366FF;
+            background-color: #f0f8ff;
+            transform: scale(1.02);
+        }
+
+        .input-icon {
+            font-size: 28px;
+            color: #a0a0a0;
+            margin-right: 20px;
+        }
+
+        /* ESTILO DE TEXTO DE INPUT (Basado en #recipient-name original) */
+        .virtual-input {
+            border: none;
+            outline: none;
+            font-size: 28px; /* Tamaño original que te gustaba */
+            font-family: Arial, sans-serif; /* Forzamos fuente para evitar cambios raros */
+            color: #333;
+            width: 100%;
+            background: transparent;
+            pointer-events: none; /* El click lo maneja el padre */
+        }
+        
+        /* Eliminar spinners de números */
+        .virtual-input::-webkit-outer-spin-button,
+        .virtual-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .virtual-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* --- TECLADO (Estilo Original Restaurado) --- */
+        .keyboard-container {
+            background-color: #ffffff;
+            border-radius: 27px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 90%;
+            height: 400px;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex: 1;
+            align-items: center;
+        }
+
+        .key {
+            flex: 1;
+            height: 100%;
+            max-height: 70px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            background-color: #ffffff;
+            border: 2px solid #000000; /* Borde negro original */
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.1s;
+        }
+
+        .key:active {
+            background-color: #f0f0f0;
+            transform: scale(0.98);
+        }
+
+        .key-backspace {
+            background-color: #e0e0e0;
+            border-color: #000000;
+        }
+
+        .key-spacer {
+            flex: 1;
+            height: 100%;
+            max-height: 70px;
+            background: transparent;
+            border: none;
+            pointer-events: none;
+        }
+
+        /* --- BOTÓN CONTINUAR (Estilo Original Restaurado) --- */
+        .continue-button {
+            width: 90%;
+            padding: 25px;
+            font-size: 32px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            color: #fff;
+            background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .continue-button:active {
+            transform: scale(0.95);
+        }
+        
+        .continue-button:hover {
+            background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%);
+        }
+
+        .robot-img {
+            max-width: 100%;
+            width: 90%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+        }

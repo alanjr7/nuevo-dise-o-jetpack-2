@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Entrega</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/crear-orden.css') }}">
+</head>
+<body>
+
+    <div class="app-container">
+       
+       
+
+        <div class="split-container">
+            
+            <div class="main-content-left">
+                <h1 class="title">Complete los detalles de entrega</h1>
+
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="number" id="recipient-name" placeholder="Telefono del destinatario" readonly>
+                </div>
+
+                <div class="keyboard-container">
+    <div class="keyboard-row">
+        <button class="key">1</button>
+        <button class="key">2</button>
+        <button class="key">3</button>
+    </div>
+    <div class="keyboard-row">
+        <button class="key">4</button>
+        <button class="key">5</button>
+        <button class="key">6</button>
+    </div>
+    <div class="keyboard-row">
+        <button class="key">7</button>
+        <button class="key">8</button>
+        <button class="key">9</button>
+    </div>
+    <div class="keyboard-row">
+         <div class="key-spacer"></div> <!-- Espaciador SIN borde -->
+        <button class="key">0</button>
+        <button class="key key-backspace"><i class="fas fa-backspace"></i></button>
+    </div>
+</div>
+
+                <button class="continue-button" onclick="window.location.href='crear-orden3.html'">
+                    Continuar <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="robot-container-right">
+                <img src="{{url_for('static', filename='imagenes/jpack2Lado.png') }}" alt="Robot de entrega" class="robot-img">
+            </div>
+        </div>
+    </div>
+
+    <script src="url_for('static', filename='js/crear-orden.js') "></script>
+    <script>
+window.onload = () => {
+    document.body.classList.add("loaded");
+};
+</script>
+</body>
+</html>

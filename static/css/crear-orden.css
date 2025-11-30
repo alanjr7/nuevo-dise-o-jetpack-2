@@ -47,6 +47,13 @@ body.loaded {
     opacity: 0.2; /* Ajusta la opacidad si es necesario */
     z-index: 0;
 }
+.key-spacer {
+    flex: 1;
+    height: 100%;
+    max-height: 70px;
+    background: transparent;
+    border: none;
+}
 
 /* Logo (Posición absoluta para la esquina) */
 .logo-container {
@@ -125,6 +132,41 @@ body.loaded {
     margin-right: 20px;
 }
 
+/* Estilo para el texto dentro de los inputs */
+.virtual-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    
+    /* TIPOGRAFÍA: Aseguramos que herede la fuente o usamos una específica */
+    font-family: Arial, sans-serif; /* O usa 'Inter', sans-serif; si cargaste esa fuente */
+    font-size: 28px; /* Tamaño grande y legible */
+    font-weight: 600; /* Un poco de negrita para que se vea sólido */
+    color: #333;
+    
+    /* Opcional: Centrar el texto si prefieres */
+    /* text-align: center; */ 
+}
+
+/* IMPORTANTE: Esto elimina las flechitas (spinners) feas de los inputs numéricos */
+.virtual-input::-webkit-outer-spin-button,
+.virtual-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Para Firefox */
+.virtual-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Ajuste del placeholder (el texto de fondo) para que no se vea tan oscuro */
+.virtual-input::placeholder {
+    color: #a0a0a0;
+    font-weight: 400;
+    font-size: 24px; /* Un poco más pequeño que el texto real */
+}
 #recipient-name {
     border: none;
     outline: none;
@@ -182,7 +224,7 @@ body.loaded {
 }
 
 .key-backspace {
-    flex: 1.5; /* Un poco más ancha */
+    flex: 1; /* Un poco más ancha */
     background-color: #e0e0e0;
     border-color: #000000;
 }
@@ -217,6 +259,16 @@ body.loaded {
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
     transition: all 0.2s ease; /* Suaviza las transiciones */
     /* NOTA: Hemos quitado position: absolute */
+}
+/* Efecto al hacer clic */
+.continue-button button:active {
+    transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
+    animation-duration: 0ms; /* Animación instantánea */
+}
+
+/* Efecto al pasar el mouse */
+.continue-button:hover {
+    background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%); /* Invierte el degradado */
 }
 
 .continue-button:hover {
