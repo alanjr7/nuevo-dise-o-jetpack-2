@@ -1,0 +1,220 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    /* Fondo basado en tu imagen (usamos un color blanco con fondo de ciudad si tienes la imagen) */
+    background-image: url("../imagenes/fondo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh; /* RESTAURADO: Necesario para que .container tenga altura de referencia */
+    display: flex; /* Contenedor principal para centrar */
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- ESTRUCTURA DE CONTENEDOR PRINCIPAL (2 Columnas) --- */
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%; /* RESTAURADO: Usamos 90% del ancho del viewport */
+   
+    height: 90vh; /* RESTAURADO: Altura de referencia */
+    align-items: center;
+    padding: 20px;
+}
+
+/* Sección izquierda (Robot y Pantalla Negra) */
+.section-left {
+    flex: 50; /* 50% para el robot/pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100%;
+    position: relative;
+}
+
+/* Sección derecha (Detalles y Calificación) */
+.section-right {
+    flex: 50; /* 50% para el contenido de la derecha */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; 
+    height: 100%; /* Ocupa el 100% de la altura del .container */
+    padding: 20px 20px; 
+}
+
+/* --- ESTILOS DE LA PANTALLA DE CALIFICACIÓN --- */
+
+/* Recuadro principal blanco */
+.rating-box {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    
+    /* Mantenemos 100% del espacio disponible */
+    width: 100%; 
+    height: 100%; 
+}
+
+.rating-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.robot-icon {
+    font-size: 3rem;
+    color: #3366FF;
+    background-color: #e6e6ff;
+    padding: 15px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.rating-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* --- GRID DE DETALLES --- */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px 0;
+    margin-bottom: 25px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-item p {
+    font-size: 1rem; /* AUMENTADO ligeramente para mejor lectura */
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.detail-item strong {
+    font-size: 1.2rem; /* AUMENTADO ligeramente */
+    font-weight: 600;
+    color: #000;
+    display: block;
+}
+
+/* --- SECCIÓN DE CALIFICACIÓN --- */
+
+
+.rating-prompt {
+    font-size: 1.2rem; /* AUMENTADO ligeramente */
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.stars {
+    font-size: 2.5rem; /* AUMENTADO el tamaño de las estrellas */
+    color: #FFD700; /* Color de estrella dorada */
+    margin-bottom: 20px;
+}
+
+.stars i {
+    cursor: pointer;
+    margin-right: 5px;
+    transition: color 0.2s;
+}
+
+.stars .far {
+    color: #ccc; /* Estrella vacía */
+}
+/* --- BOTONES --- */
+
+.button-group {
+    display: flex;
+    gap: 20px; /* AUMENTADO el espacio entre botones */
+    width: 100%;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 18px 20px; /* AUMENTADO el padding */
+    font-size: 1.2rem; /* AUMENTADO el tamaño de fuente */
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+
+
+.button-group button:active {
+    transform: scale(0.98);
+}
+
+.btn-omitir {
+    background-color: #808080;
+    color: #ffffff;
+}
+
+.btn-enviar {
+    background-color: #3366FF;
+    color: #ffffff;
+}
+
+.reclamo-link {
+    text-align: center;
+    width: 100%;
+    margin-top: 15px;
+}
+.reclamo-link a {
+    color: #3366FF;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* --- ESTILO DEL ROBOT (CONFIGURACIONES DE FIGMA) --- */
+
+.robot-img-fin {
+    /* Dimensiones de Figma */
+    width: 843px; 
+    height: 1133px; 
+    
+    /* Posicionamiento absoluto de Figma */
+    position: absolute;
+    /* Ajustado para centrar verticalmente al 40% (o 111px) */
+    top: 111px; /* Dejé 111px como en Figma, aunque el 40% que pusiste en el query también funciona */
+    left: -80px; 
+    
+    height: auto;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+    
+    /* Reset de transforms anteriores, solo necesitamos la posición absoluta */
+    transform: none; 
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 10;
+}

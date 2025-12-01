@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envío en Curso</title>
+    <!-- CSS cargado desde Flask (Asumiendo que styles.css está en static/css/) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Estilos adicionales para centrar texto o elementos si se desea */
+        .content-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 3rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            z-index: 2; /* Por encima del overlay oscuro */
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <video id="bg-video" autoplay muted loop playsinline>
+            <!-- Video cargado desde Flask -->
+            <source src="{{ url_for('static', filename='videos/Untitled design.mp4') }}" type="video/mp4">
+            Tu navegador no soporta video HTML5.
+        </video>
+    </div>
+
+  
+
+    <script>
+        // Lógica de redirección automática después de 10 segundos
+        document.addEventListener('DOMContentLoaded', () => {
+            const redirectUrl = "{{ url_for('orden_completada') }}";
+            const delayInMilliseconds = 10000; // 10 segundos
+
+            console.log("Iniciando cuenta regresiva de 10 segundos...");
+
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, delayInMilliseconds);
+        });
+    </script>
+
+</body>
+</html>

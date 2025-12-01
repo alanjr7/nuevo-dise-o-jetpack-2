@@ -52,6 +52,15 @@ body.loaded {
             padding: 20px;
         }
 
+        /* APLICAR ESTILO FLEX Y ALINEACIÓN AL FORMULARIO
+           PARA QUE LOS ELEMENTOS INTERNOS SE CENTREN Y APILEN CORRECTAMENTE */
+        .main-content-left form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra horizontalmente el contenido del form */
+            width: 100%; /* Ocupa el ancho completo de su padre (main-content-left) */
+        }
+
         /* COLUMNA DERECHA (25%) */
         .robot-container-right {
             width: 45%;
@@ -64,7 +73,7 @@ body.loaded {
         /* --- COMPONENTES VISUALES --- */
 
         .title {
-            width: 100%;
+            width: 90%; /* Ajustado para coincidir con el ancho de los inputs */
             font-size: 48px;
             font-weight: 700;
             color: #000000;

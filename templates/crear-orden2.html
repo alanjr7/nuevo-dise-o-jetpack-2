@@ -10,45 +10,47 @@
 <body>
 
     <div class="app-container">
-       
-       
-
         <div class="split-container">
             
             <div class="main-content-left">
                 <h1 class="title">Complete los detalles de entrega</h1>
 
-                <div class="input-group">
-                    <i class="fas fa-user input-icon"></i>
-                    <input type="number" id="recipient-name" placeholder="Telefono del destinatario" readonly>
-                </div>
+                <!-- INICIO DEL FORMULARIO para Flask -->
+                <form action="{{ url_for('paso2_telefono') }}" method="POST">
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <!-- El 'name' debe coincidir con request.form.get('recipient_phone') en app.py -->
+                        <input type="number" id="recipient-name" name="recipient_phone" placeholder="Telefono del destinatario" readonly required>
+                    </div>
 
-                <div class="keyboard-container">
-    <div class="keyboard-row">
-        <button class="key">1</button>
-        <button class="key">2</button>
-        <button class="key">3</button>
-    </div>
-    <div class="keyboard-row">
-        <button class="key">4</button>
-        <button class="key">5</button>
-        <button class="key">6</button>
-    </div>
-    <div class="keyboard-row">
-        <button class="key">7</button>
-        <button class="key">8</button>
-        <button class="key">9</button>
-    </div>
-    <div class="keyboard-row">
-         <div class="key-spacer"></div> <!-- Espaciador SIN borde -->
-        <button class="key">0</button>
-        <button class="key key-backspace"><i class="fas fa-backspace"></i></button>
-    </div>
-</div>
+                    <div class="keyboard-container">
+                        <div class="keyboard-row">
+                            <button type="button" class="key">1</button>
+                            <button type="button" class="key">2</button>
+                            <button type="button" class="key">3</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button type="button" class="key">4</button>
+                            <button type="button" class="key">5</button>
+                            <button type="button" class="key">6</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button type="button" class="key">7</button>
+                            <button type="button" class="key">8</button>
+                            <button type="button" class="key">9</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <div class="key-spacer"></div> <!-- Espaciador SIN borde -->
+                            <button type="button" class="key">0</button>
+                            <button type="button" class="key key-backspace"><i class="fas fa-backspace"></i></button>
+                        </div>
+                    </div>
 
-                <button class="continue-button" onclick="window.location.href='crear-orden3.html'">
-                    Continuar <i class="fas fa-arrow-right"></i>
-                </button>
+                    <!-- Botón para enviar el formulario a Flask -->
+                    <button type="submit" class="continue-button">
+                        Continuar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
             </div>
 
             <div class="robot-container-right">
@@ -57,7 +59,8 @@
         </div>
     </div>
 
-    <script src="url_for('static', filename='js/crear-orden.js') "></script>
+    <!-- RUTA DE SCRIPT CORREGIDA -->
+    <script src="{{ url_for('static', filename='js/crear-orden.js') }}"></script>
     <script>
 window.onload = () => {
     document.body.classList.add("loaded");

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interfaz de Entrega - Final</title>
-    <!-- CORREGIDO: Ruta directa a css/crear-orden3.css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/crear-orden3.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,6 +16,7 @@
             <div class="main-content-left">
                 <h1 class="title">Complete los detalles de entrega</h1>
 
+                <!-- El action ya estaba correcto y apunta a paso3_final -->
                 <form action="{{ url_for('paso3_final') }}" method="POST">
                     
                     <div class="inputs-container">
@@ -63,13 +63,12 @@
             </div>
 
             <div class="robot-container-right">
-                <!-- CORREGIDO: Ruta directa a imagenes/jpack2Lado.png -->
                 <img src="{{ url_for('static', filename='imagenes/jpack2Lado.png') }}" alt="Robot de entrega" class="robot-img" onerror="this.style.display='none'">
             </div>
         </div>
     </div>
 
-    <!-- CORREGIDO: Ruta directa a js/crear-orden3.js -->
+    <!-- RUTA DE SCRIPT CORREGIDA -->
     <script src="{{ url_for('static', filename='js/crear-orden3.js') }}"> </script>
 </body>
 </html>

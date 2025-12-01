@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrega Completada</title>
+    <!-- Usa los estilos del nuevo diseño de finalización -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fin.css') }}">
+    <!-- Necesario para los iconos de estrellas y robot -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- SECCIÓN IZQUIERDA: Robot/Máquina -->
+        <div class="section-left">
+            <!-- Logo que se ve en la imagen -->
+          
+            <!-- La imagen del robot que tenías en inicio.html -->
+            <!-- Nota: El estilo de esta imagen (robot-img-fin) se define en fin.css para parecerse al diseño -->
+            <img class="robot-img-fin" src="{{ url_for('static', filename='imagenes/robot.png') }}" alt="Máquina de entrega JPAC2">
+            
+            <!-- Simulación de la pantalla interactiva del robot (opcional) -->
+            <div class="robot-display">
+                <!-- Contenido de la pantalla del robot aquí (ej. mensajes) -->
+            </div>
+        </div>
+
+        <!-- SECCIÓN DERECHA: Calificación y Detalles -->
+        <div class="section-right">
+            <div class="rating-box">
+                <div class="rating-header">
+                    <!-- Icono de robot de Font Awesome para simular el diseño -->
+                    <i class="fas fa-robot robot-icon"></i>
+                    <h2>Entrega Completada!</h2>
+                </div>
+
+                <!-- Detalles de la Orden (Valores de ejemplo, podrían ser dinámicos) -->
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <p>Número de pedido</p>
+                        <strong>#33232</strong>
+                    </div>
+                    <div class="detail-item">
+                        <p>Entregado por</p>
+                        <strong>Robot-JPAC2</strong>
+                    </div>
+                    <div class="detail-item">
+                        <p>Hora de entrega</p>
+                        <strong>14:30</strong>
+                    </div>
+                    <div class="detail-item">
+                        <p>Ubicación</p>
+                        <!-- Aquí podrías usar una variable de Flask, ej: {{ piso_entrega }} -->
+                        <strong>Departamento N34</strong>
+                    </div>
+                </div>
+
+                <!-- Sección de Calificación -->
+                <p class="rating-prompt">¿Cómo calificarías tu experiencia?</p>
+                <div class="stars" id="star-rating">
+                    <!-- Estrellas iniciales: 3 llenas y 2 vacías -->
+                    <i class="fas fa-star" data-value="1"></i>
+                    <i class="fas fa-star" data-value="2"></i>
+                    <i class="fas fa-star" data-value="3"></i>
+                    <i class="far fa-star" data-value="4"></i>
+                    <i class="far fa-star" data-value="5"></i>
+                </div>
+
+                <div class="button-group">
+                    <!-- Botón Omitir: Redirige a inicio -->
+                    <button class="btn-omitir" onclick="window.location.href='{{ url_for('inicio') }}'">Omitir</button>
+                    <!-- Botón Enviar (se asume que enviaría la calificación) -->
+                    <button class="btn-enviar">Enviar</button>
+                </div>
+
+                <div class="reclamo-link">
+                    <a href="#">Tengo un reclamo</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        // Lógica simple para interactividad de estrellas
+        const starRating = document.getElementById('star-rating');
+        const stars = starRating.querySelectorAll('i');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                stars.forEach(s => {
+                    // Si el valor de la estrella es menor o igual al valor seleccionado, se llena (fas)
+                    if (parseInt(s.getAttribute('data-value')) <= value) {
+                        s.classList.remove('far'); // Quita estrella vacía
+                        s.classList.add('fas'); // Añade estrella llena
+                    } else {
+                        s.classList.remove('fas'); // Quita estrella llena
+                        s.classList.add('far'); // Añade estrella vacía
+                    }
+                });
+                // Aquí podrías guardar la calificación seleccionada para el envío
+            });
+        });
+    </script>
+</body>
+</html>
