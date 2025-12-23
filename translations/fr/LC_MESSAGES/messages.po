@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-10-25 12:00+0000\n"
+"PO-Revision-Date: 2023-10-25 12:00+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+"Language: fr\n"
+
+msgid "Create order"
+msgstr "Créer une commande"
+
+msgid "Assign order to JPAC2"
+msgstr "Attribuer la commande à JPAC2"
+
+msgid "Start"
+msgstr "Commencer"
+
+msgid "I am JPAC2"
+msgstr "Je suis JPAC2"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Robot"
+msgstr "Robot"

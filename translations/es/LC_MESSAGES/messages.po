@@ -1,0 +1,85 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-10-25 12:00+0000\n"
+"PO-Revision-Date: 2023-10-25 12:00+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+"Language: es\n"
+
+msgid "Create order"
+msgstr "Crear orden"
+
+msgid "Assign order to JPAC2"
+msgstr "Asignar orden al JPAC2"
+
+msgid "Start"
+msgstr "Empezar"
+
+msgid "I am JPAC2"
+msgstr "Soy JPAC2"
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Robot"
+msgstr "Robot"
+
+msgid "Complete delivery details"
+msgstr "Complete los detalles de entrega"
+
+msgid "Recipient name"
+msgstr "Nombre del destinatario"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Delivery Interface"
+msgstr "Interfaz de Entrega"
+
+msgid "Delivery Interface - Final"
+msgstr "Interfaz de Entrega - Final"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Floor Number"
+msgstr "Nro de piso"
+
+msgid "Delivery Completed"
+msgstr "Entrega Completada"
+
+msgid "Delivery Completed!"
+msgstr "¡Entrega Completada!"
+
+msgid "Order Number"
+msgstr "Número de pedido"
+
+msgid "Delivered by"
+msgstr "Entregado por"
+
+msgid "Delivery Time"
+msgstr "Hora de entrega"
+
+msgid "Location"
+msgstr "Ubicación"
+
+msgid "Apartment N34"
+msgstr "Departamento N34"
+
+msgid "How would you rate your experience?"
+msgstr "¿Cómo calificarías tu experiencia?"
+
+msgid "Skip"
+msgstr "Omitir"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "I have a complaint"
+msgstr "Tengo un reclamo"

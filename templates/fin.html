@@ -1,29 +1,87 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrega Completada</title>
+    <title>{{ _('Delivery Completed') }}</title>
     <!-- Usa los estilos del nuevo diseño de finalización -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fin.css') }}">
     <!-- Necesario para los iconos de estrellas y robot -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos para el selector de idioma -->
+    <style>
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .language-selector a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .language-selector a:hover {
+            color: #0056b3;
+            background-color: #f8f9fa;
+            transform: translateY(-1px);
+        }
+        
+        .language-selector a.active {
+            color: #0056b3;
+            font-weight: 700;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        .language-selector span {
+            color: #ccc;
+            font-weight: 300;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Selector de idioma -->
+    <div class="language-selector">
+        <a href="{{ url_for('set_language', lang='en') }}"
+           class="{{ 'active' if current_language == 'en' else '' }}">
+           🇺🇸 EN
+        </a>
+        <span>|</span>
+        <a href="{{ url_for('set_language', lang='es') }}"
+           class="{{ 'active' if current_language == 'es' else '' }}">
+           🇪🇸 ES
+        </a>
+       
+    </div>
+
     <div class="container">
         
         <!-- SECCIÓN IZQUIERDA: Robot/Máquina -->
         <div class="section-left">
-            <!-- Logo que se ve en la imagen -->
-          
-            <!-- La imagen del robot que tenías en inicio.html -->
-            <!-- Nota: El estilo de esta imagen (robot-img-fin) se define en fin.css para parecerse al diseño -->
-            <img class="robot-img-fin" src="{{ url_for('static', filename='imagenes/robot.png') }}" alt="Máquina de entrega JPAC2">
+            <!-- La imagen del robot -->
+            <img class="robot-img-fin" src="{{ url_for('static', filename='imagenes/robot.png') }}" 
+                 alt="{{ _('Delivery Robot') }}">
             
-            <!-- Simulación de la pantalla interactiva del robot (opcional) -->
+            <!-- Simulación de la pantalla interactiva del robot -->
             <div class="robot-display">
-                <!-- Contenido de la pantalla del robot aquí (ej. mensajes) -->
+                <!-- Contenido de la pantalla del robot aquí -->
             </div>
         </div>
 
@@ -31,36 +89,34 @@
         <div class="section-right">
             <div class="rating-box">
                 <div class="rating-header">
-                    <!-- Icono de robot de Font Awesome para simular el diseño -->
                     <i class="fas fa-robot robot-icon"></i>
-                    <h2>Entrega Completada!</h2>
+                    <h2>{{ _('Delivery Completed!') }}</h2>
                 </div>
 
-                <!-- Detalles de la Orden (Valores de ejemplo, podrían ser dinámicos) -->
+                <!-- Detalles de la Orden -->
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <p>Número de pedido</p>
+                        <p>{{ _('Order Number') }}</p>
                         <strong>#33232</strong>
                     </div>
                     <div class="detail-item">
-                        <p>Entregado por</p>
+                        <p>{{ _('Delivered by') }}</p>
                         <strong>Robot-JPAC2</strong>
                     </div>
                     <div class="detail-item">
-                        <p>Hora de entrega</p>
+                        <p>{{ _('Delivery Time') }}</p>
                         <strong>14:30</strong>
                     </div>
                     <div class="detail-item">
-                        <p>Ubicación</p>
+                        <p>{{ _('Location') }}</p>
                         <!-- Aquí podrías usar una variable de Flask, ej: {{ piso_entrega }} -->
-                        <strong>Departamento N34</strong>
+                        <strong>{{ _('Apartment N34') }}</strong>
                     </div>
                 </div>
 
                 <!-- Sección de Calificación -->
-                <p class="rating-prompt">¿Cómo calificarías tu experiencia?</p>
+                <p class="rating-prompt">{{ _('How would you rate your experience?') }}</p>
                 <div class="stars" id="star-rating">
-                    <!-- Estrellas iniciales: 3 llenas y 2 vacías -->
                     <i class="fas fa-star" data-value="1"></i>
                     <i class="fas fa-star" data-value="2"></i>
                     <i class="fas fa-star" data-value="3"></i>
@@ -69,14 +125,16 @@
                 </div>
 
                 <div class="button-group">
-                    <!-- Botón Omitir: Redirige a inicio -->
-                    <button class="btn-omitir" onclick="window.location.href='{{ url_for('inicio') }}'">Omitir</button>
-                    <!-- Botón Enviar (se asume que enviaría la calificación) -->
-                    <button class="btn-enviar">Enviar</button>
+                    <button class="btn-omitir" onclick="window.location.href='{{ url_for('inicio') }}'">
+                        {{ _('Skip') }}
+                    </button>
+                    <button class="btn-enviar">
+                        {{ _('Submit') }}
+                    </button>
                 </div>
 
                 <div class="reclamo-link">
-                    <a href="#">Tengo un reclamo</a>
+                    <a href="#">{{ _('I have a complaint') }}</a>
                 </div>
             </div>
         </div>
@@ -92,16 +150,14 @@
             star.addEventListener('click', () => {
                 const value = parseInt(star.getAttribute('data-value'));
                 stars.forEach(s => {
-                    // Si el valor de la estrella es menor o igual al valor seleccionado, se llena (fas)
                     if (parseInt(s.getAttribute('data-value')) <= value) {
-                        s.classList.remove('far'); // Quita estrella vacía
-                        s.classList.add('fas'); // Añade estrella llena
+                        s.classList.remove('far'); 
+                        s.classList.add('fas'); 
                     } else {
-                        s.classList.remove('fas'); // Quita estrella llena
-                        s.classList.add('far'); // Añade estrella vacía
+                        s.classList.remove('fas'); 
+                        s.classList.add('far'); 
                     }
                 });
-                // Aquí podrías guardar la calificación seleccionada para el envío
             });
         });
     </script>

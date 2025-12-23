@@ -1,26 +1,87 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz de Entrega</title>
+    <title>{{ _('Delivery Interface') }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/crear-orden.css') }}">
+    
+    <!-- Estilos para el selector de idioma -->
+    <style>
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .language-selector a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .language-selector a:hover {
+            color: #0056b3;
+            background-color: #f8f9fa;
+            transform: translateY(-1px);
+        }
+        
+        .language-selector a.active {
+            color: #0056b3;
+            font-weight: 700;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        .language-selector span {
+            color: #ccc;
+            font-weight: 300;
+        }
+    </style>
 </head>
 <body>
 
     <div class="app-container">
+        
+        <!-- Selector de idioma -->
+        <div class="language-selector">
+            <a href="{{ url_for('set_language', lang='en') }}"
+               class="{{ 'active' if current_language == 'en' else '' }}">
+               🇺🇸 EN
+            </a>
+            <span>|</span>
+            <a href="{{ url_for('set_language', lang='es') }}"
+               class="{{ 'active' if current_language == 'es' else '' }}">
+               🇪🇸 ES
+            </a>
+           
+        </div>
+
         <div class="split-container">
             
             <div class="main-content-left">
-                <h1 class="title">Complete los detalles de entrega</h1>
+                <h1 class="title">{{ _('Complete delivery details') }}</h1>
 
                 <!-- INICIO DEL FORMULARIO para Flask -->
                 <form action="{{ url_for('paso2_telefono') }}" method="POST">
                     <div class="input-group">
                         <i class="fas fa-user input-icon"></i>
-                        <!-- El 'name' debe coincidir con request.form.get('recipient_phone') en app.py -->
-                        <input type="number" id="recipient-name" name="recipient_phone" placeholder="Telefono del destinatario" readonly required>
+                        <!-- Placeholder traducible -->
+                        <input type="number" id="recipient-name" name="recipient_phone" 
+                               placeholder="{{ _('Recipient phone') }}" readonly required>
                     </div>
 
                     <div class="keyboard-container">
@@ -48,23 +109,23 @@
 
                     <!-- Botón para enviar el formulario a Flask -->
                     <button type="submit" class="continue-button">
-                        Continuar <i class="fas fa-arrow-right"></i>
+                        {{ _('Continue') }} <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
             </div>
 
             <div class="robot-container-right">
-                <img src="{{url_for('static', filename='imagenes/jpack2Lado.png') }}" alt="Robot de entrega" class="robot-img">
+                <img src="{{ url_for('static', filename='imagenes/jpack2Lado.png') }}" 
+                     alt="{{ _('Delivery Robot') }}" class="robot-img">
             </div>
         </div>
     </div>
 
-    <!-- RUTA DE SCRIPT CORREGIDA -->
     <script src="{{ url_for('static', filename='js/crear-orden.js') }}"></script>
     <script>
-window.onload = () => {
-    document.body.classList.add("loaded");
-};
-</script>
+        window.onload = () => {
+            document.body.classList.add("loaded");
+        };
+    </script>
 </body>
 </html>

@@ -1,31 +1,94 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Usamos url_for para los recursos dentro de 'recursos' -->
+    <!-- Links to the static CSS file generated below -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/inicio.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
-    <title>Inicio</title>
+    <title>{{ _('Home') }}</title>
+    <style>
+        /* Inline styles for specific language selector tweaks */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .language-selector a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .language-selector a:hover {
+            color: #0056b3;
+            background-color: #f8f9fa;
+            transform: translateY(-1px);
+        }
+        
+        .language-selector a.active {
+            color: #0056b3;
+            font-weight: 700;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        .language-selector span {
+            color: #ccc;
+            font-weight: 300;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <!-- Language selector -->
+        <div class="language-selector">
+            <a href="{{ url_for('set_language', lang='en') }}"
+               class="{{ 'active' if current_language == 'en' else '' }}">
+               🇺🇸 EN
+            </a>
+            <span>|</span>
+            <a href="{{ url_for('set_language', lang='es') }}"
+               class="{{ 'active' if current_language == 'es' else '' }}">
+               🇪🇸 ES
+            </a>
+           
+        </div>
+
         <div class="section">
             <div class="btn-text">
                 <div class="text-content">
-                    <h1>Crear orden</h1>
-                    <p>Asignar orden al JPAC2</p>
-                    <!-- Este enlace busca la función 'paso1_nombre' en app.py -->
-                    <button onclick="window.location.href='{{ url_for('paso1_nombre') }}'">Empezar -></button>
+                    <h1>{{ _('Create order') }}</h1>
+                    <p>{{ _('Assign order to JPAC2') }}</p>
+                    <button onclick="window.location.href='{{ url_for('paso1_nombre') }}'">
+                        {{ _('Start') }} →
+                    </button>
                 </div>
             </div>
         </div>
+
         <div class="section">
             <div class="soy-container">
-                <p class="text-soy">Soy JPAC2</p>
+                <p class="text-soy">{{ _('I am JPAC2') }}</p>
             </div>
-            <!-- Imagen con url_for -->
-            <img class="robot" src="{{ url_for('static', filename='imagenes/robot.png') }}" alt="Robot">
+            <!-- Fallback image if static file doesn't exist -->
+            <img class="robot"
+                 src="{{ url_for('static', filename='imagenes/robot.png') }}"
+                 onerror="this.src='https://placehold.co/200x300?text=Robot'"
+                 alt="{{ _('Robot') }}">
         </div>
     </div>
     <script>

@@ -1,33 +1,96 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz de Entrega - Final</title>
+    <title>{{ _('Delivery Interface - Final') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/crear-orden3.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Estilos para el selector de idioma -->
+    <style>
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .language-selector a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .language-selector a:hover {
+            color: #0056b3;
+            background-color: #f8f9fa;
+            transform: translateY(-1px);
+        }
+        
+        .language-selector a.active {
+            color: #0056b3;
+            font-weight: 700;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        .language-selector span {
+            color: #ccc;
+            font-weight: 300;
+        }
+    </style>
 </head>
 <body>
+    
+    <!-- Selector de idioma -->
+    <div class="language-selector">
+        <a href="{{ url_for('set_language', lang='en') }}"
+           class="{{ 'active' if current_language == 'en' else '' }}">
+           🇺🇸 EN
+        </a>
+        <span>|</span>
+        <a href="{{ url_for('set_language', lang='es') }}"
+           class="{{ 'active' if current_language == 'es' else '' }}">
+           🇪🇸 ES
+        </a>
+       
+    </div>
 
     <div class="app-container">
         <div class="split-container">
             
             <div class="main-content-left">
-                <h1 class="title">Complete los detalles de entrega</h1>
+                <h1 class="title">{{ _('Complete delivery details') }}</h1>
 
-                <!-- El action ya estaba correcto y apunta a paso3_final -->
+                <!-- El action apunta a paso3_final -->
                 <form action="{{ url_for('paso3_final') }}" method="POST">
                     
                     <div class="inputs-container">
                         <div class="input-group" id="group-phone" onclick="selectInput('phone')">
                             <i class="fas fa-phone input-icon"></i>
-                            <input type="number" id="input-phone" name="confirm_phone" class="virtual-input" placeholder="Teléfono" value="{{ telefono }}" readonly>
+                            <!-- Placeholder traducido -->
+                            <input type="number" id="input-phone" name="confirm_phone" class="virtual-input" 
+                                   placeholder="{{ _('Phone') }}" value="{{ telefono }}" readonly>
                         </div>
 
                         <div class="input-group active-field" id="group-floor" onclick="selectInput('floor')">
                             <i class="fas fa-building input-icon"></i>
-                            <input type="number" id="input-floor" name="floor_number" class="virtual-input" placeholder="Nro de piso" readonly required>
+                            <!-- Placeholder traducido -->
+                            <input type="number" id="input-floor" name="floor_number" class="virtual-input" 
+                                   placeholder="{{ _('Floor Number') }}" readonly required>
                         </div>
                     </div>
 
@@ -57,18 +120,23 @@
                     </div>
 
                     <button type="submit" class="continue-button">
-                        Continuar <i class="fas fa-arrow-right"></i>
+                        {{ _('Continue') }} <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
             </div>
 
             <div class="robot-container-right">
-                <img src="{{ url_for('static', filename='imagenes/jpack2Lado.png') }}" alt="Robot de entrega" class="robot-img" onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='imagenes/jpack2Lado.png') }}" 
+                     alt="{{ _('Delivery Robot') }}" class="robot-img" onerror="this.style.display='none'">
             </div>
         </div>
     </div>
 
-    <!-- RUTA DE SCRIPT CORREGIDA -->
     <script src="{{ url_for('static', filename='js/crear-orden3.js') }}"> </script>
+    <script>
+        window.onload = () => {
+            document.body.classList.add("loaded");
+        };
+    </script>
 </body>
 </html>

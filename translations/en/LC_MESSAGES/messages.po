@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+msgid "Crear orden"
+msgstr "Create order"
+
+msgid "Asignar orden al JPAC2"
+msgstr "Assign order to JPAC2"
+
+msgid "Empezar"
+msgstr "Start"
+
+msgid "Soy JPAC2"
+msgstr "I am JPAC2"
+
+msgid "Inicio"
+msgstr "Home"
+
+msgid "Robot"
+msgstr "Robot"

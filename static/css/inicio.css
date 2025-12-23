@@ -44,7 +44,7 @@ body.loaded {
 }
 .text-content h1 {
     position: absolute;
-    width: calc(372px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
+    width: auto; /* Escala proporcionalmente el ancho */
     height: calc(77px * (1080 / 720)); /* Escala proporcionalmente la altura */
     top: calc(229px * (1080 / 720)); /* Ajusta la posición vertical */
     left: calc(172px * (1920 / 1280)); /* Ajusta la posición horizontal */
@@ -77,7 +77,7 @@ body.loaded {
     width: calc(496px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
     height: calc(744px * (1080 / 720)); /* Escala proporcionalmente la altura */
     top: calc(19px * (1080 / 720)); /* Ajusta la posición vertical */
-    left: calc(708px * (1920 / 1280)); /* Ajusta la posición horizontal */
+    left: calc(908px * (1920 / 1280)); /* Ajusta la posición horizontal */
     transform: rotate(0deg); /* Mantiene el ángulo original */
     opacity: 1; /* Mantiene la opacidad original */
 }
@@ -116,7 +116,7 @@ body.loaded {
 .soy-container {
     position: absolute;
     top: calc(59px * (1080 / 720)); /* Ajusta la posición vertical */
-    left: calc(879px * (1920 / 1280)); /* Ajusta la posición horizontal */
+    left: calc(1090px * (1920 / 1280)); /* Ajusta la posición horizontal */
     width: calc(154px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
     height: calc(30px * (1080 / 720)); /* Escala proporcionalmente la altura */
     background: #003BBB; /* Color de fondo */

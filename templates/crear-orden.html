@@ -1,62 +1,146 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz de Entrega</title>
+    <title>{{ _('Delivery Interface') }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/crear-orden.css') }}">
+    
+    <!-- Estilos para el selector de idioma (Igual que en inicio.html) -->
+    <style>
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .language-selector a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .language-selector a:hover {
+            color: #0056b3;
+            background-color: #f8f9fa;
+            transform: translateY(-1px);
+        }
+        
+        .language-selector a.active {
+            color: #0056b3;
+            font-weight: 700;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        .language-selector span {
+            color: #ccc;
+            font-weight: 300;
+        }
+    </style>
 </head>
 <body>
 
     <div class="app-container">
+        
+        <!-- Selector de idioma añadido -->
+        <div class="language-selector">
+            <a href="{{ url_for('set_language', lang='en') }}"
+               class="{{ 'active' if current_language == 'en' else '' }}">
+               🇺🇸 EN
+            </a>
+            <span>|</span>
+            <a href="{{ url_for('set_language', lang='es') }}"
+               class="{{ 'active' if current_language == 'es' else '' }}">
+               🇪🇸 ES
+            </a>
+            <span>|</span>
+            
+        </div>
+
         <div class="split-container">
             
             <div class="main-content-left">
-                <h1 class="title">Complete los detalles de entrega</h1>
+                <!-- Texto marcado para traducción -->
+                <h1 class="title">{{ _('Complete delivery details') }}</h1>
                 
-                <!-- INICIO DEL FORMULARIO para Flask -->
+                <!-- Formulario Flask -->
                 <form action="{{ url_for('paso1_nombre') }}" method="POST">
                     <div class="input-group">
                         <i class="fas fa-user input-icon"></i>
-                        <!-- El 'name' debe coincidir con request.form.get('recipient_name') en app.py -->
-                        <input type="text" id="recipient-name" name="recipient_name" placeholder="Nombre del destinatario" readonly required>
+                        <!-- Placeholder marcado para traducción -->
+                        <input type="text" id="recipient-name" name="recipient_name"
+                               placeholder="{{ _('Recipient name') }}" readonly required>
                     </div>
 
+                    <!-- TECLADO VIRTUAL -->
                     <div class="keyboard-container">
+
                         <div class="keyboard-row">
-                            <button class="key">Q</button><button class="key">W</button><button class="key">E</button><button class="key">R</button><button class="key">T</button><button class="key">Y</button><button class="key">U</button><button class="key">I</button><button class="key">O</button><button class="key">P</button>
+                            <button type="button" class="key">Q</button><button type="button" class="key">W</button>
+                            <button type="button" class="key">E</button><button type="button" class="key">R</button>
+                            <button type="button" class="key">T</button><button type="button" class="key">Y</button>
+                            <button type="button" class="key">U</button><button type="button" class="key">I</button>
+                            <button type="button" class="key">O</button><button type="button" class="key">P</button>
                         </div>
+
                         <div class="keyboard-row">
-                            <button class="key">A</button><button class="key">S</button><button class="key">D</button><button class="key">F</button><button class="key">G</button><button class="key">H</button><button class="key">J</button><button class="key">K</button><button class="key">L</button>
+                            <button type="button" class="key">A</button><button type="button" class="key">S</button>
+                            <button type="button" class="key">D</button><button type="button" class="key">F</button>
+                            <button type="button" class="key">G</button><button type="button" class="key">H</button>
+                            <button type="button" class="key">J</button><button type="button" class="key">K</button>
+                            <button type="button" class="key">L</button>
                         </div>
+
                         <div class="keyboard-row">
-                            <button class="key">Z</button><button class="key">X</button><button class="key">C</button><button class="key">V</button><button class="key">B</button><button class="key">N</button><button class="key">M</button><button type="button" class="key key-backspace"><i class="fas fa-backspace"></i></button>
+                            <button type="button" class="key">Z</button><button type="button" class="key">X</button>
+                            <button type="button" class="key">C</button><button type="button" class="key">V</button>
+                            <button type="button" class="key">B</button><button type="button" class="key">N</button>
+                            <button type="button" class="key">M</button>
+                            <button type="button" class="key key-backspace"><i class="fas fa-backspace"></i></button>
                         </div>
+
                         <div class="keyboard-row">
                             <button type="button" class="key key-space"></button>
                         </div>
+
                     </div>
 
-                    <!-- Botón para enviar el formulario a Flask -->
+                    <!-- Botón de envío con texto traducible -->
                     <button type="submit" class="continue-button">
-                        Continuar <i class="fas fa-arrow-right"></i>
+                        {{ _('Continue') }} <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
             </div>
 
             <div class="robot-container-right">
-                <img src="{{ url_for('static', filename='imagenes/jpack2Lado.png') }}" alt="Robot de entrega" class="robot-img">
+                <img src="{{ url_for('static', filename='imagenes/jpack2Lado.png') }}"
+                     alt="{{ _('Delivery Robot') }}" class="robot-img">
             </div>
         </div>
     </div>
 
-    <!-- RUTA DE SCRIPT CORREGIDA -->
+    <!-- Script principal -->
     <script src="{{ url_for('static', filename='js/crear-orden.js') }}"></script>
+
     <script>
-window.onload = () => {
-    document.body.classList.add("loaded");
-};
-</script>
+        window.onload = () => {
+            document.body.classList.add("loaded");
+        };
+    </script>
+
 </body>
 </html>
