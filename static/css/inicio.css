@@ -1,3 +1,6 @@
+/* =============================
+   RESET
+============================= */
 * {
     margin: 0;
     padding: 0;
@@ -5,138 +8,386 @@
 }
 
 html, body {
+    width: 100%;
     height: 100%;
-     margin: 0; /* Elimina cualquier margen predeterminado */
-    padding: 0; /* Elimina cualquier relleno predeterminado */
-    overflow: hidden; /* Evita el desplazamiento si algo excede el tamaño */
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
 }
 
+/* =============================
+   FONDO
+============================= */
 body {
-    background-image: url("../imagenes/fondo.png");
-    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-position: center center; /* Centra la imagen en ambas direcciones */
-    height: 100vh; /* Asegura que el fondo ocupe toda la altura de la ventana */
-    font-family: Arial, sans-serif;
-    color: #000;
-       opacity: 0;
-    transition: opacity 0.6s;
+    background: url("../imagenes/fondo.png") center / cover no-repeat;
+    opacity: 0;
+    transition: opacity 0.6s ease;
 }
+
 body.loaded {
     opacity: 1;
 }
-.container {
+
+/* =============================
+   TOGGLE BUTTON PARA IDIOMAS
+============================= */
+.language-toggle-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(5px);
+    min-width: 140px;
+}
+
+.toggle-button-cover {
+    display: table-cell;
+    position: relative;
+    width: 74px;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+.button-cover:before {
+    counter-increment: button-counter;
+    content: counter(button-counter);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #d7e3e3;
+    font-size: 12px;
+    line-height: 1;
+    padding: 5px;
+}
+
+.button {
+    position: relative;
+    width: 74px;
+    height: 36px;
+    overflow: hidden;
+}
+
+.checkbox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.knobs {
+    z-index: 2;
+}
+
+.layer {
+    width: 100%;
+    background-color: #ebf7fc;
+    transition: 0.3s ease all;
+    z-index: 1;
+}
+
+.button.r,
+.button.r .layer {
+    border-radius: 100px;
+}
+
+/* Personalizado para idiomas */
+#button-3 .knobs:before {
+    content: "EN";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 28px;
+    height: 28px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 28px;
+    background: linear-gradient(180deg, #3366FF, #1F3D99);
+    border-radius: 50%;
+    transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#button-3 .checkbox:active + .knobs:before {
+    width: 46px;
+    border-radius: 100px;
+}
+
+#button-3 .checkbox:checked:active + .knobs:before {
+    margin-left: -26px;
+}
+
+#button-3 .checkbox:checked + .knobs:before {
+    content: "ES";
+    left: 42px;
+    background: linear-gradient(180deg, #FF6B6B, #C44569);
+}
+
+#button-3 .checkbox:checked ~ .layer {
+    background-color: #fcebeb;
+}
+
+/* Etiquetas de idioma */
+.language-labels {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    width: 100%;
+    margin-top: 5px;
 }
 
-.section {
-    flex: 1; /* Cada sección ocupará el 50% del ancho */
+.lang-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    color: #666;
+    background: transparent;
     display: flex;
-    justify-content: center;
     align-items: center;
+    gap: 5px;
 }
 
-.btn-text {
-    text-align: left; /* Justifica todo el contenido a la izquierda */
+.lang-label.active {
+    color: #003BBB;
+    background: rgba(0, 59, 187, 0.1);
+    transform: translateY(-2px);
 }
+
+.es-label.active {
+    color: #C44569;
+    background: rgba(196, 69, 105, 0.1);
+}
+
+/* Efectos hover */
+.language-toggle-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* =============================
+   RESPONSIVE
+============================= */
+@media (max-width: 900px) {
+    .language-toggle-container {
+        top: 15px;
+        left: 15px;
+        padding: 12px;
+        min-width: 120px;
+    }
+    
+    .toggle-button-cover {
+        width: 65px;
+        height: 32px;
+    }
+    
+    .button {
+        width: 65px;
+        height: 32px;
+    }
+    
+    #button-3 .knobs:before {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 9px;
+    }
+    
+    #button-3 .checkbox:checked + .knobs:before {
+        left: 37px;
+    }
+}
+
+@media (max-width: 600px) {
+    .language-toggle-container {
+        top: 10px;
+        left: 10px;
+        padding: 10px;
+        min-width: 110px;
+    }
+    
+    .toggle-button-cover {
+        width: 60px;
+        height: 30px;
+    }
+    
+    .button {
+        width: 60px;
+        height: 30px;
+    }
+    
+    #button-3 .knobs:before {
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        font-size: 8px;
+    }
+    
+    #button-3 .checkbox:checked + .knobs:before {
+        left: 34px;
+    }
+    
+    .lang-label {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .language-toggle-container {
+        padding: 18px;
+        min-width: 160px;
+    }
+    
+    .toggle-button-cover {
+        width: 80px;
+        height: 40px;
+    }
+    
+    .button {
+        width: 80px;
+        height: 40px;
+    }
+    
+    #button-3 .knobs:before {
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 11px;
+    }
+    
+    #button-3 .checkbox:checked + .knobs:before {
+        left: 44px;
+    }
+}
+/* =============================
+   CONTENEDOR PRINCIPAL
+============================= */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 3vw; /* MENOR padding → más espacio útil */
+    gap: 4vw;
+}
+
+/* =============================
+   COLUMNAS
+============================= */
+.section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =============================
+   TEXTO
+============================= */
+.text-content {
+    width: 100%;
+    max-width: 40vw; /* más ancho que antes */
+}
+
 .text-content h1 {
-    position: absolute;
-    width: calc(372px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
-    height: calc(77px * (1080 / 720)); /* Escala proporcionalmente la altura */
-    top: calc(229px * (1080 / 720)); /* Ajusta la posición vertical */
-    left: calc(172px * (1920 / 1280)); /* Ajusta la posición horizontal */
-    font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
-    font-weight: 700; /* Negrita */
-    font-size: calc(64px * (1920 / 1280)); /* Escala proporcionalmente el tamaño de fuente */
-    line-height: 100%; /* Mantiene el interlineado */
-    letter-spacing: 0%; /* Sin espaciado adicional entre letras */
-    text-align: left; /* Alineación del texto */
-    color: #000; /* Color del texto */
-    opacity: 1; /* Mantiene la opacidad */
+    font-size: clamp(3rem, 5vw, 4.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
 }
+
 .text-content p {
-     position: absolute;
-    width:  calc(455px * (1920 / 1280));
-    height:calc(45px * (1080 / 720)) ;
-     top: calc(300px * (1080 / 720)); /* Ajusta la posición vertical */
-    left: calc(120px * (1920 / 1280)); /* Ajusta la posición horizontal */
-    margin-left: 5%;
-  
-    opacity: 0.50;
-    font-family: "Inter", sans-serif;
-    font-weight: 500; /* Medium */
-    font-size: 27px;
-    line-height: 1;   /* 100% */
-    letter-spacing: 0;
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    opacity: 0.65;
+    margin-bottom: 2.5rem;
 }
-.robot {
-    position: absolute;
-    width: calc(496px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
-    height: calc(744px * (1080 / 720)); /* Escala proporcionalmente la altura */
-    top: calc(19px * (1080 / 720)); /* Ajusta la posición vertical */
-    left: calc(708px * (1920 / 1280)); /* Ajusta la posición horizontal */
-    transform: rotate(0deg); /* Mantiene el ángulo original */
-    opacity: 1; /* Mantiene la opacidad original */
-}
-/* Estilos para el botón */
+
+/* =============================
+   BOTÓN
+============================= */
 .text-content button {
-    position: absolute;
-    width: calc(400px * (1920 / 1280)); /* Ajusta el ancho proporcionalmente */
-    height: calc(50px * (1080 / 720)); /* Ajusta la altura proporcionalmente */
-    top: calc(400px * (1080 / 720)); /* Ajusta la posición vertical */
-    left: calc(172px * (1920 / 1280)); /* Ajusta la posición horizontal */
-    font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
+    width: 100%;
+    max-width: 420px;
+    padding: 1.2rem;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    color: #fff;
+    background: linear-gradient(180deg, #3366FF, #1F3D99);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+        font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
     font-weight: 500; /* Medium */
-    font-size: calc(27px * (1920 / 1280)); /* Escala proporcionalmente el tamaño de fuente */
-    line-height: 100%; /* Mantiene el interlineado */
-    letter-spacing: 0%; /* Sin espaciado adicional entre letras */
-    text-align: center; /* Centra el texto dentro del botón */
-    color: #fff; /* Color del texto */
-    background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%); /* Fondo degradado */
-    border: none; /* Sin bordes */
-    border-radius: 8px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    transition: all 0.2s ease; /* Suaviza las transiciones */
 }
 
-/* Efecto al hacer clic */
 .text-content button:active {
-    transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
-    animation-duration: 0ms; /* Animación instantánea */
+    transform: scale(0.96);
 }
 
-/* Efecto al pasar el mouse */
-.text-content button:hover {
-    background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%); /* Invierte el degradado */
+/* =============================
+   IMAGEN ROBOT
+============================= */
+.robot {
+    max-width: 100%;
+    max-height: 88vh; /* casi toda la altura */
+    height: auto;
+    object-fit: contain;
 }
-/* Rectángulo */
+
+/* =============================
+   BADGE
+============================= */
 .soy-container {
     position: absolute;
-    top: calc(59px * (1080 / 720)); /* Ajusta la posición vertical */
-    left: calc(879px * (1920 / 1280)); /* Ajusta la posición horizontal */
-    width: calc(154px * (1920 / 1280)); /* Escala proporcionalmente el ancho */
-    height: calc(30px * (1080 / 720)); /* Escala proporcionalmente la altura */
-    background: #003BBB; /* Color de fondo */
-    border-radius: calc(15px * (1920 / 1280)); /* Bordes redondeados */
-    display: flex; /* Permite centrar el contenido */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    cursor: pointer; /* Cambia el cursor al pasar sobre la caja */
-    animation-duration: 0ms; /* Animación instantánea */
+    top: 2.2vh;
+    right: 3vw;
+    padding: 0.6rem 1.6rem;
+    background: #003BBB;
+    border-radius: 999px;
 }
 
-/* Texto dentro del rectángulo */
 .text-soy {
-    font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
-    font-weight: 600; /* Semi Bold */
-    font-size: calc(16px * (1920 / 1280)); /* Escala proporcionalmente el tamaño de fuente */
-    line-height: 100%; /* Mantiene el interlineado */
-    letter-spacing: 0%; /* Sin espaciado adicional entre letras */
-    text-align: center; /* Centra el texto dentro de la caja */
-    color: #ffffff; /* Color del texto */
-    opacity: 1; /* Mantiene la opacidad */
+    font-size: clamp(0.9rem, 1.4vw, 1.3rem);
+    font-weight: 600;
+    color: #fff;
 }
 
+/* =============================
+   AJUSTE 1280x800
+============================= */
+@media (max-width: 1280px) {
+    .text-content {
+        max-width: 48vw;
+    }
+}
+
+/* =============================
+   TABLET VERTICAL
+============================= */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        gap: 3vh;
+    }
+
+    .text-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .text-content button {
+        margin: 0 auto;
+    }
+}

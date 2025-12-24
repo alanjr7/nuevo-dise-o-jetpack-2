@@ -1,37 +1,73 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ session.get('language', 'en') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Usamos url_for para los recursos dentro de 'recursos' -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/inicio.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/toggle-button.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
-    <title>Inicio</title>
+    <title>{{ _('Home') }}</title>
 </head>
 <body>
+    <!-- Toggle Button para cambiar idioma - SOLO en esta página -->
+    <div class="language-toggle-container">
+        <div class="toggle-button-cover">
+            <div id="button-3" class="button r">
+                <input class="checkbox" type="checkbox" id="languageCheckbox"
+                       {% if session.get('language', 'en') == 'es' %}checked{% endif %}>
+                <div class="knobs"></div>
+                <div class="layer"></div>
+            </div>
+        </div>
+        <div class="language-labels">
+            <span class="lang-label en-label {% if session.get('language', 'en') == 'en' %}active{% endif %}">
+                🇺🇸 EN
+            </span>
+            <span class="lang-label es-label {% if session.get('language', 'en') == 'es' %}active{% endif %}">
+                🇧🇴 ES
+            </span>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="section">
             <div class="btn-text">
                 <div class="text-content">
-                    <h1>Crear orden</h1>
-                    <p>Asignar orden al JPAC2</p>
-                    <!-- Este enlace busca la función 'paso1_nombre' en app.py -->
-                    <button onclick="window.location.href='{{ url_for('paso1_nombre') }}'">Empezar -></button>
+                    <h1>{{ _('Create order') }}</h1>
+                    <p>{{ _('Assign order to RD2') }}</p>
+                    <button onclick="window.location.href='{{ url_for('paso2_telefono') }}'">
+                        {{ _('Start ->') }}
+                    </button>
                 </div>
             </div>
         </div>
         <div class="section">
             <div class="soy-container">
-                <p class="text-soy">Soy JPAC2</p>
+                <p class="text-soy">{{ _("I'm RD2") }}</p>
             </div>
-            <!-- Imagen con url_for -->
             <img class="robot" src="{{ url_for('static', filename='imagenes/robot.png') }}" alt="Robot">
         </div>
     </div>
-    <script>
+    
+  <script>
+        let redirectTimeout;
+
         window.onload = () => {
             document.body.classList.add("loaded");
+
+            redirectTimeout = setTimeout(() => {
+                window.location.href = "{{ url_for('index') }}";
+            }, 20000);
+
+            const checkbox = document.getElementById('languageCheckbox');
+
+            checkbox.addEventListener('change', function () {
+                clearTimeout(redirectTimeout); // ← CLAVE
+                const newLang = this.checked ? 'es' : 'en';
+                window.location.href = `/set_language/${newLang}`;
+            });
         };
-    </script>
+</script>
+
 </body>
 </html>

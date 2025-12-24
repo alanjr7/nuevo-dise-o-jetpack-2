@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="{{ session.get('language', 'en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tiempo.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>{{ _('Processing Time') }}</title>
+</head>
+<body>
+    <div class="container">
+        <div class="timer-display">
+            <h2>{{ _('Remaining Time - please pick up your order') }}</h2>
+            <div id="countdown" class="time">00:59</div> 
+        </div>
+        
+        <button id="close-button" onclick="window.location.href='{{ url_for('orden_completada') }}'">
+            {{ _('Close') }}
+        </button>
+    </div>
+
+    <script>
+    // Configuración para Flask y Persistencia
+    const CERRAR_PUERTA_URL = "{{ url_for('cerrar_puerta') }}";
+    const TIEMPO_TOTAL_SEGUNDOS = 59;
+    const STORAGE_KEY = 'countdown_end_time'; // Clave para localStorage
+
+    window.onload = () => {
+        document.body.classList.add("loaded");
+    };
+
+    const countdownElement = document.getElementById('countdown');
+    const closeButton = document.getElementById('close-button');
+    let timerInterval;
+    let puertaCerrada = false;
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        // Asegura que no sea negativo si el tiempo restante es < 0
+        const remainingSeconds = Math.max(0, seconds % 60); 
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+        return `${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    function cerrarYRedirigir() {
+        if (puertaCerrada) return;
+        puertaCerrada = true;
+
+        // 1. Limpiar el estado de persistencia
+        localStorage.removeItem(STORAGE_KEY);
+        clearInterval(timerInterval);
+        closeButton.disabled = true;
+
+        // 2. Ejecutar la petición POST para cerrar la puerta en Flask
+        fetch(CERRAR_PUERTA_URL, {
+            method: 'POST',
+        })
+        .then(response => {
+            console.log("{{ _('Close command sent to Flask. Redirecting to FIN.') }}");
+            // 3. FIX: Redirección incondicional una vez que la petición es procesada
+            window.location.href = "{{ url_for('orden_completada') }}";
+        })
+        .catch(error => {
+            console.error('{{ _('Error trying to close door (fetch)') }}:', error);
+            // 3. Si hay un error de red, forzamos la redirección de todas formas
+            window.location.href = "{{ url_for('orden_completada') }}";
+        });
+    }
+    
+    // Función para calcular el tiempo restante usando localStorage
+    function calculateTimeRemaining() {
+        const endTime = localStorage.getItem(STORAGE_KEY);
+        if (!endTime) {
+            // Es la primera carga: Guardar la hora de finalización
+            const newEndTime = Date.now() + TIEMPO_TOTAL_SEGUNDOS * 1000;
+            localStorage.setItem(STORAGE_KEY, newEndTime);
+            return TIEMPO_TOTAL_SEGUNDOS;
+        }
+
+        const timeRemainingMs = endTime - Date.now();
+        // Devolver el tiempo restante en segundos
+        return Math.floor(timeRemainingMs / 1000);
+    }
+
+    function updateCountdown() {
+        let totalSeconds = calculateTimeRemaining(); // Obtiene el tiempo persistente
+
+        if (totalSeconds <= 0) {
+            totalSeconds = 0;
+            
+            // --- Cierre Automático ---
+            cerrarYRedirigir(); // Detiene el contador, limpia storage y redirige
+            // -------------------------
+            return;
+        }
+
+        countdownElement.textContent = formatTime(totalSeconds);
+        // Nota: totalSeconds ya se decrementa implícitamente en calculateTimeRemaining() 
+        // con Date.now(), no necesitamos el totalSeconds-- aquí.
+    }
+
+    // Configuración del botón "Cerrar"
+    closeButton.onclick = function() {
+        // --- Cierre Manual ---
+        cerrarYRedirigir(); // Detiene el contador, limpia storage y redirige
+        // ---------------------
+    };
+
+    // Iniciar el temporizador
+    updateCountdown(); 
+    timerInterval = setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>

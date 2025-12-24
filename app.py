@@ -1,117 +1,166 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-# Importaciones necesarias para SQLAlchemy y datetime
-from flask_sqlalchemy import SQLAlchemy 
-from datetime import datetime
+from flask_babel import Babel, gettext as _
 import os 
-# from dotenv import load_dotenv # Opcional: si deseas cargar variables desde un archivo .env
+import serial
+from datetime import datetime
+import time
 
-# load_dotenv() # Descomentar si usas un archivo .env
-
+# --- CONFIGURACIÓN DE APP ---
 app = Flask(__name__)
-# Usar una variable de entorno para la clave secreta
 app.secret_key = os.getenv('SECRET_KEY', 'clave_secreta_fallback_si_no_hay_env')
 
-# --- CONFIGURACIÓN DE BASE DE DATOS (CAMBIADO A SQLITE PARA ELIMINAR ERRORES DE CONEXIÓN) ---
-# SQLITE es la base de datos recomendada para desarrollo en Flask.
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    'DATABASE_URL', 
-    'sqlite:///site.db' # Usamos una base de datos SQLite en un archivo local
-)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+# --- CONFIGURACIÓN DE IDIOMAS ---
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'  # Inglés por defecto
+app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'es']
 
-# --- MODELO DE DATOS (Tabla de Órdenes) ---
-class Order(db.Model):
-    __tablename__ = 'orders' # Nombre explícito de la tabla
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    telefono = db.Column(db.String(20), nullable=False)
-    piso = db.Column(db.String(10), nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+# Inicializar Babel
+babel = Babel(app)
 
-    def __repr__(self):
-        return f"<Order {self.id} by {self.nombre}>"
+# Función para obtener el idioma desde la sesión
+def get_locale():
+    # Devuelve el idioma guardado en sesión, o inglés por defecto
+    return session.get('language', 'en')
 
-# Creador de tablas (solo se ejecuta una vez al inicio)
-with app.app_context():
-    db.create_all()
-    print("--- Tablas de la base de datos creadas o verificadas. ---")
-# --------------------------------------------------------------------------------
+# Configurar Babel con nuestra función
+babel.init_app(app, locale_selector=get_locale)
+
+# Ruta para cambiar idioma - CORREGIDA
+@app.route('/set_language/<lang>')
+def set_language(lang):
+    if lang in ['en', 'es']:
+        session['language'] = lang
+        print(f"--- IDIOMA CAMBIADO A: {lang} ---")
+    
+    # CORRECCIÓN: Redirigir a la página actual, no siempre al inicio
+    return redirect(request.referrer or url_for('inicio'))
+
+# --- CONFIGURACIÓN ARDUINO ---
+PUERTO_SERIAL = 'COM3' 
+BAUD_RATE = 115200
+
+def enviar_comando_arduino(comando):
+    """
+    Intenta enviar un comando ('A' o 'C') al Arduino a través del puerto serial.
+    Retorna True si el envío fue exitoso, False en caso contrario.
+    """
+    comando_byte = comando.encode('utf-8')
+    
+    try:
+        ser = serial.Serial(PUERTO_SERIAL, BAUD_RATE, timeout=1)
+        time.sleep(2) 
+        ser.write(comando_byte)
+        print(f"--- COMANDO SERIAL ENVIADO A ARDUINO: {comando} ---")
+        ser.close()
+        return True
+    
+    except serial.SerialException as e:
+        print(f"--- ERROR CRÍTICO DE COMUNICACIÓN SERIAL ---")
+        print(f"No se pudo conectar o enviar al puerto {PUERTO_SERIAL}.")
+        print(f"Asegúrate de que Arduino está conectado y el puerto es correcto.")
+        print(f"Detalle del error: {e}")
+        return False
+    except Exception as e:
+        print(f"--- OTRO ERROR: {e} ---")
+        return False
+
+# Código de Arduino para mostrar en consola
+ARDUINO_CODE_SUCCESS = """
+Abriendo puerta...
+servoIzquierdo.write(180); // IZQ_ABIERTO
+delay(500);
+servoDerecho.write(0); // DER_ABIERTO
+Puerta abierta.
+"""
+
+ARDUINO_CODE_FAILURE = """
+Cerrando puerta...
+servoDerecho.write(90); // DER_CERRADO
+delay(500);
+servoIzquierdo.write(87); // IZQ_CERRADO
+Puerta cerrada.
+"""
+
+# --- RUTAS DE LA APLICACIÓN ---
 
 # 1. Página de Intro (Video)
 @app.route('/')
 def index():
+    """Ruta: / -> index.html (Video de bienvenida)"""
     return render_template('index.html')
 
-# 2. Página de Inicio (Botón Empezar)
+# 2. Página de Inicio (Botón Empezar) - ÚNICO lugar con botón de idioma
 @app.route('/inicio')
 def inicio():
+    """Ruta: /inicio -> inicio.html (Pantalla de inicio/Empezar)"""
     return render_template('inicio.html')
 
-# 3. Paso 1: Ingresar Nombre
-@app.route('/orden/nombre', methods=['GET', 'POST'])
-def paso1_nombre():
-    if request.method == 'POST':
-        nombre = request.form.get('recipient_name')
-        session['nombre_usuario'] = nombre
-        return redirect(url_for('paso2_telefono'))
-    
-    return render_template('crear-orden.html')
-
-# 4. Paso 2: Ingresar Teléfono
+# 3. Paso 2: Ingresar Teléfono/Código
 @app.route('/orden/telefono', methods=['GET', 'POST'])
 def paso2_telefono():
-    if request.method == 'POST':
-        telefono = request.form.get('recipient_phone')
-        session['telefono_usuario'] = telefono
-        return redirect(url_for('paso3_final'))
-        
-    return render_template('crear-orden2.html')
+    if 'intentos' not in session:
+        session['intentos'] = 0
 
-# 5. Paso 3: Confirmación / Piso (Guarda la orden y redirige a ENVIO)
-@app.route('/orden/final', methods=['GET', 'POST'])
-def paso3_final():
+    error_msg = None
+
     if request.method == 'POST':
-        piso = request.form.get('floor_number')
-        nombre = session.get('nombre_usuario')
-        telefono = session.get('telefono_usuario')
-        
-        # --- LÓGICA DE PERSISTENCIA (GUARDAR EN LA DB) ---
-        if nombre and telefono and piso:
-            try:
-                nueva_orden = Order(
-                    nombre=nombre,
-                    telefono=telefono,
-                    piso=piso
-                )
-                db.session.add(nueva_orden)
-                db.session.commit()
-                print(f"--- ORDEN ID {nueva_orden.id} GUARDADA EN DB ---")
-            except Exception as e:
-                db.session.rollback()
-                print(f"ERROR al guardar en DB: {e}")
-            finally:
-                # Limpiamos la sesión después de guardar
-                session.pop('nombre_usuario', None)
-                session.pop('telefono_usuario', None)
-            
-        # REDIRECCIÓN CLAVE: Ir a la pantalla de "Enviando"
-        return redirect(url_for('orden_enviando'))
+        codigo_ingresado = request.form.get('recipient_phone')
+
+        # CÓDIGO CORRECTO
+        if codigo_ingresado == '1234':
+            session.pop('intentos', None)
+            enviar_comando_arduino('A')
+            return redirect(url_for('orden_tiempo'))
+
+        # CÓDIGO INCORRECTO
+        else:
+            session['intentos'] += 1
+            enviar_comando_arduino('C')
+
+            if session['intentos'] >= 3:
+                session.pop('intentos', None)
+                return redirect(url_for('orden_completada'))
+
+            error_msg = _("Incorrect")
+
+    intentos_restantes = 3 - session['intentos']
+
+    return render_template(
+        'crear-orden2.html',
+        error_msg=error_msg,
+        intentos_restantes=intentos_restantes
+    )
+
+# 4. Ruta: Pantalla de Tiempo (40s)
+@app.route('/orden/tiempo')
+def orden_tiempo():
+    """Ruta: /orden/tiempo -> tiempo.html (Pantalla de conteo/Recoja su orden)"""
+    return render_template('tiempo.html')
+
+# 5. Ruta de Cierre de Puerta
+@app.route('/orden/cerrar_puerta', methods=['POST'])
+def cerrar_puerta():
+    """
+    Ruta: Llamada por JavaScript desde tiempo.html para enviar el comando 'C' al Arduino,
+    tanto por tiempo expirado como por cierre manual.
+    """
+    print("--- INICIANDO CIERRE DE PUERTA (Solicitud de JavaScript) ---")
     
-    # Si es GET (al cargar la página), renderizamos la plantilla
-    return render_template('crear-orden3.html', 
-                           nombre=session.get('nombre_usuario'), 
-                           telefono=session.get('telefono_usuario'))
+    # Intenta enviar 'C' (Cerrar) al Arduino
+    envio_exitoso = enviar_comando_arduino('C')
 
-# 6. Nueva Ruta: Pantalla de Envío (Dura 10s)
-@app.route('/orden/enviando')
-def orden_enviando():
-    return render_template('envio.html')
+    if envio_exitoso:
+         print("--- COMANDO ARDUINO 'C' ENVIADO CORRECTAMENTE ---")
+    else:
+         print("--- FALLO EN ENVÍO SERIAL. MOSTRANDO SIMULACIÓN DE CIERRE ---")
+         print(ARDUINO_CODE_FAILURE)
+         
+    return redirect(url_for('orden_completada'))
 
-# 7. Nueva Ruta: Pantalla de Fin
+# 6. Ruta: Pantalla de Fin
 @app.route('/orden/completada')
 def orden_completada():
+    """Ruta: /orden/completada -> fin.html (Pantalla de finalización/Calificación)"""
     return render_template('fin.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5002)

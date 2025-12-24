@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ session.get('language', 'en') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrega Completada</title>
+    <title>{{ _('Delivery Completed') }}</title>
     <!-- Usa los estilos del nuevo diseño de finalización -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fin.css') }}">
     <!-- Necesario para los iconos de estrellas y robot -->
@@ -19,7 +19,8 @@
           
             <!-- La imagen del robot que tenías en inicio.html -->
             <!-- Nota: El estilo de esta imagen (robot-img-fin) se define en fin.css para parecerse al diseño -->
-            <img class="robot-img-fin" src="{{ url_for('static', filename='imagenes/robot.png') }}" alt="Máquina de entrega JPAC2">
+            <img class="robot-img-fin" src="{{ url_for('static', filename='imagenes/robot.png') }}" 
+                 alt="{{ _('JPAC2 delivery machine') }}">
             
             <!-- Simulación de la pantalla interactiva del robot (opcional) -->
             <div class="robot-display">
@@ -33,32 +34,32 @@
                 <div class="rating-header">
                     <!-- Icono de robot de Font Awesome para simular el diseño -->
                     <i class="fas fa-robot robot-icon"></i>
-                    <h2>Entrega Completada!</h2>
+                    <h2>{{ _('Delivery Completed!') }}</h2>
                 </div>
 
                 <!-- Detalles de la Orden (Valores de ejemplo, podrían ser dinámicos) -->
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <p>Número de pedido</p>
+                        <p>{{ _('Order number') }}</p>
                         <strong>#33232</strong>
                     </div>
                     <div class="detail-item">
-                        <p>Entregado por</p>
-                        <strong>Robot-JPAC2</strong>
+                        <p>{{ _('Delivered by') }}</p>
+                        <strong>Robot-RD2</strong>
                     </div>
                     <div class="detail-item">
-                        <p>Hora de entrega</p>
+                        <p>{{ _('Delivery time') }}</p>
                         <strong>14:30</strong>
                     </div>
                     <div class="detail-item">
-                        <p>Ubicación</p>
+                        <p>{{ _('Location') }}</p>
                         <!-- Aquí podrías usar una variable de Flask, ej: {{ piso_entrega }} -->
-                        <strong>Departamento N34</strong>
+                        <strong>{{ _('Department N34') }}</strong>
                     </div>
                 </div>
 
                 <!-- Sección de Calificación -->
-                <p class="rating-prompt">¿Cómo calificarías tu experiencia?</p>
+                <p class="rating-prompt">{{ _('How would you rate your experience?') }}</p>
                 <div class="stars" id="star-rating">
                     <!-- Estrellas iniciales: 3 llenas y 2 vacías -->
                     <i class="fas fa-star" data-value="1"></i>
@@ -70,13 +71,15 @@
 
                 <div class="button-group">
                     <!-- Botón Omitir: Redirige a inicio -->
-                    <button class="btn-omitir" onclick="window.location.href='{{ url_for('inicio') }}'">Omitir</button>
+                    <button class="btn-omitir" onclick="window.location.href='{{ url_for('inicio') }}'">
+                        {{ _('Skip') }}
+                    </button>
                     <!-- Botón Enviar (se asume que enviaría la calificación) -->
-                    <button class="btn-enviar">Enviar</button>
+                    <button class="btn-enviar">{{ _('Send') }}</button>
                 </div>
 
                 <div class="reclamo-link">
-                    <a href="#">Tengo un reclamo</a>
+                    <a href="#">{{ _('I have a complaint') }}</a>
                 </div>
             </div>
         </div>

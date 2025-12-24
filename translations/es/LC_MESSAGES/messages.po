@@ -1,0 +1,103 @@
+# messages.po — Español (es)
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-16 14:33-0400\n"
+"PO-Revision-Date: 2025-12-16 14:33-0400\n"
+"Last-Translator: \n"
+"Language: es\n"
+"Language-Team: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Create order"
+msgstr "Crear orden"
+
+msgid "Assign order to RD2"
+msgstr "Asignar orden al RD2"
+
+msgid "Start ->"
+msgstr "Empezar ->"
+
+msgid "I'm RD2"
+msgstr "Soy RD2"
+
+msgid "Incorrect"
+msgstr "Incorrecto"
+
+msgid "Delivery Interface"
+msgstr "Interfaz de Entrega"
+
+msgid "Remaining attempts"
+msgstr "Intentos restantes"
+
+msgid "Complete delivery details"
+msgstr "Complete los detalles de entrega"
+
+msgid "Enter delivery code"
+msgstr "Ingrese el código de entrega"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Delivery robot"
+msgstr "Robot de entrega"
+
+msgid "Processing Time"
+msgstr "Tiempo de Procesamiento"
+
+msgid "Remaining Time - please pick up your order"
+msgstr "Tiempo restante - por favor recoja su orden"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Delivery Completed"
+msgstr "Entrega Completada"
+
+msgid "Delivery Completed!"
+msgstr "¡Entrega Completada!"
+
+msgid "Order number"
+msgstr "Número de pedido"
+
+msgid "Delivered by"
+msgstr "Entregado por"
+
+msgid "Delivery time"
+msgstr "Hora de entrega"
+
+msgid "Location"
+msgstr "Ubicación"
+
+msgid "Department N34"
+msgstr "Departamento N34"
+
+msgid "How would you rate your experience?"
+msgstr "¿Cómo calificarías tu experiencia?"
+
+msgid "Skip"
+msgstr "Omitir"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "I have a complaint"
+msgstr "Tengo un reclamo"
+
+msgid "Welcome"
+msgstr "Bienvenido"
+
+msgid "Your browser does not support the video tag."
+msgstr "Tu navegador no soporta la etiqueta de video."
+
+---
+
+# messages.po — Inglés (en)
