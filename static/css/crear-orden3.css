@@ -6,231 +6,358 @@
 
 html, body {
     height: 100%;
-     margin: 0; /* Elimina cualquier margen predeterminado */
-    padding: 0; /* Elimina cualquier relleno predeterminado */
-    overflow: hidden; /* Evita el desplazamiento si algo excede el tamaño */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 body {
     background-image: url("../imagenes/fondo.png");
-    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-position: center center; /* Centra la imagen en ambas direcciones */
-    height: 100vh; /* Asegura que el fondo ocupe toda la altura de la ventana */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
     font-family: Arial, sans-serif;
     color: #000;
-       opacity: 0;
+    opacity: 0;
     transition: opacity 0.6s;
 }
+
 body.loaded {
     opacity: 1;
 }
 
-        /* --- LAYOUT --- */
-        .app-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex; /* Aseguramos que el layout use flex */
-        }
+/* --- LAYOUT --- */
+.app-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
 
-        .split-container {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
+.split-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
 
-        /* COLUMNA IZQUIERDA (75%) - Ajustado ancho según tu CSS original */
-        .main-content-left {
-            width: 55%; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+/* COLUMNA IZQUIERDA (55%) */
+.main-content-left {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(15px, 2vw, 25px);
+}
 
-        /* APLICAR ESTILO FLEX Y ALINEACIÓN AL FORMULARIO
-           PARA QUE LOS ELEMENTOS INTERNOS SE CENTREN Y APILEN CORRECTAMENTE */
-        .main-content-left form {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centra horizontalmente el contenido del form */
-            width: 100%; /* Ocupa el ancho completo de su padre (main-content-left) */
-        }
+/* APLICAR ESTILO FLEX Y ALINEACIÓN AL FORMULARIO */
+.main-content-left form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Límite máximo para no crecer demasiado */
+}
 
-        /* COLUMNA DERECHA (25%) */
-        .robot-container-right {
-            width: 45%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+/* COLUMNA DERECHA (45%) */
+.robot-container-right {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(15px, 2vw, 25px);
+}
 
-        /* --- COMPONENTES VISUALES --- */
+/* --- COMPONENTES VISUALES --- */
+.title {
+    width: 90%;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: clamp(20px, 3vh, 35px);
+    text-align: center;
+}
 
-        .title {
-            width: 90%; /* Ajustado para coincidir con el ancho de los inputs */
-            font-size: 48px;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 40px;
-            text-align: center;
-        }
+/* Contenedor flexible para poner los inputs en fila */
+.inputs-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: clamp(15px, 2vw, 25px);
+    width: 90%;
+    max-width: 700px;
+    margin-bottom: clamp(20px, 3vh, 30px);
+}
 
-        /* Contenedor flexible para poner los inputs en fila */
-        .inputs-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            gap: 20px;
-            width: 90%; 
-            margin-bottom: 30px;
-        }
+/* Grupo de entrada */
+.input-group {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: clamp(15px, 2vh, 20px) clamp(20px, 2.5vw, 25px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    flex: 1;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    min-height: 70px;
+}
 
-        /* Grupo de entrada (Estilo Original Restaurado) */
-        .input-group {
-            display: flex;
-            align-items: center;
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 20px 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            /* Quitamos margin-bottom individual porque ahora están en contenedor */
-            margin-bottom: 0; 
-            flex: 1; /* Importante para que compartan espacio */
-            transition: all 0.3s ease;
-            border: 2px solid transparent; /* Borde base */
-            cursor: pointer;
-        }
+/* ESTADO ACTIVO */
+.input-group.active-field {
+    border-color: #3366FF;
+    background-color: #f0f8ff;
+    transform: scale(1.02);
+}
 
-        /* ESTADO ACTIVO: Diseño solicitado */
-        .input-group.active-field {
-            border-color: #3366FF;
-            background-color: #f0f8ff;
-            transform: scale(1.02);
-        }
+.input-icon {
+    font-size: clamp(1.5rem, 2vw, 1.75rem);
+    color: #a0a0a0;
+    margin-right: clamp(15px, 1.5vw, 20px);
+}
 
-        .input-icon {
-            font-size: 28px;
-            color: #a0a0a0;
-            margin-right: 20px;
-        }
+/* ESTILO DE TEXTO DE INPUT */
+.virtual-input {
+    border: none;
+    outline: none;
+    font-size: clamp(1.5rem, 2vw, 1.75rem);
+    font-family: Arial, sans-serif;
+    color: #333;
+    width: 100%;
+    background: transparent;
+    pointer-events: none;
+}
 
-        /* ESTILO DE TEXTO DE INPUT (Basado en #recipient-name original) */
-        .virtual-input {
-            border: none;
-            outline: none;
-            font-size: 28px; /* Tamaño original que te gustaba */
-            font-family: Arial, sans-serif; /* Forzamos fuente para evitar cambios raros */
-            color: #333;
-            width: 100%;
-            background: transparent;
-            pointer-events: none; /* El click lo maneja el padre */
-        }
-        
-        /* Eliminar spinners de números */
-        .virtual-input::-webkit-outer-spin-button,
-        .virtual-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .virtual-input[type=number] {
-            -moz-appearance: textfield;
-        }
+/* Eliminar spinners de números */
+.virtual-input::-webkit-outer-spin-button,
+.virtual-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
-        /* --- TECLADO (Estilo Original Restaurado) --- */
-        .keyboard-container {
-            background-color: #ffffff;
-            border-radius: 27px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 30px;
-            width: 90%;
-            height: 400px;
-        }
+.virtual-input[type=number] {
+    -moz-appearance: textfield;
+}
 
-        .keyboard-row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex: 1;
-            align-items: center;
-        }
+/* --- TECLADO --- */
+.keyboard-container {
+    background-color: #ffffff;
+    border-radius: 27px;
+    padding: clamp(15px, 2vh, 20px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1vh, 10px);
+    margin-bottom: clamp(20px, 3vh, 30px);
+    width: 90%;
+    max-width: 700px;
+    height: clamp(300px, 40vh, 400px);
+}
 
-        .key {
-            flex: 1;
-            height: 100%;
-            max-height: 70px;
-            font-size: 24px;
-            font-weight: 600;
-            color: #333;
-            background-color: #ffffff;
-            border: 2px solid #000000; /* Borde negro original */
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.1s;
-        }
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 1.5vw, 20px);
+    flex: 1;
+    align-items: center;
+}
 
-        .key:active {
-            background-color: #f0f0f0;
-            transform: scale(0.98);
-        }
+.key {
+    flex: 1;
+    height: 100%;
+    max-height: 70px;
+    font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+    font-weight: 600;
+    color: #333;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    transition: transform 0.1s;
+}
 
-        .key-backspace {
-            background-color: #e0e0e0;
-            border-color: #000000;
-        }
+.key:active {
+    background-color: #f0f0f0;
+    transform: scale(0.98);
+}
 
-        .key-spacer {
-            flex: 1;
-            height: 100%;
-            max-height: 70px;
-            background: transparent;
-            border: none;
-            pointer-events: none;
-        }
+.key-backspace {
+    background-color: #e0e0e0;
+    border-color: #000000;
+}
 
-        /* --- BOTÓN CONTINUAR (Estilo Original Restaurado) --- */
-        .continue-button {
-            width: 90%;
-            padding: 25px;
-            font-size: 32px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            color: #fff;
-            background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+.key-spacer {
+    flex: 1;
+    height: 100%;
+    max-height: 70px;
+    background: transparent;
+    border: none;
+    pointer-events: none;
+}
 
-        .continue-button:active {
-            transform: scale(0.95);
-        }
-        
-        .continue-button:hover {
-            background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%);
-        }
+/* --- BOTÓN CONTINUAR --- */
+.continue-button {
+    width: 90%;
+    max-width: 700px;
+    padding: clamp(18px, 2.5vh, 25px);
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(10px, 1vw, 15px);
+    color: #fff;
+    background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
 
-        .robot-img {
-            max-width: 100%;
-            width: 90%;
-            height: auto;
-            display: block;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
-        }
+.continue-button:active {
+    transform: scale(0.95);
+}
+
+.continue-button:hover {
+    background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%);
+}
+
+.robot-img {
+    max-width: 100%;
+    width: 90%;
+    height: auto;
+    max-height: 85vh;
+    display: block;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+    object-fit: contain;
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDAD --- */
+@media (max-width: 1024px) {
+    .split-container {
+        flex-direction: column;
+    }
+    
+    .main-content-left,
+    .robot-container-right {
+        width: 100%;
+        height: 50%;
+        padding: 15px;
+    }
+    
+    .inputs-container {
+        width: 95%;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .keyboard-container {
+        height: 250px;
+        width: 95%;
+    }
+    
+    .robot-img {
+        max-height: 75vh;
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        width: 95%;
+    }
+    
+    .input-group {
+        padding: 15px 18px;
+        min-height: 60px;
+    }
+    
+    .virtual-input {
+        font-size: 1.3rem;
+    }
+    
+    .input-icon {
+        font-size: 1.3rem;
+        margin-right: 12px;
+    }
+    
+    .keyboard-container {
+        height: 220px;
+        padding: 12px;
+        gap: 6px;
+    }
+    
+    .key {
+        min-height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .keyboard-row {
+        gap: 8px;
+    }
+    
+    .continue-button {
+        font-size: 1.4rem;
+        padding: 16px;
+        width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+    
+    .input-group {
+        padding: 12px 15px;
+        min-height: 55px;
+    }
+    
+    .virtual-input {
+        font-size: 1.2rem;
+    }
+    
+    .keyboard-container {
+        height: 200px;
+    }
+    
+    .key {
+        min-height: 40px;
+        font-size: 1rem;
+    }
+    
+    .continue-button {
+        font-size: 1.2rem;
+        padding: 14px;
+    }
+    
+    .robot-img {
+        width: 75%;
+    }
+}
+
+/* Para pantallas muy grandes (4K+) */
+@media (min-width: 1920px) {
+    .main-content-left form {
+        max-width: 1000px;
+    }
+    
+    .inputs-container,
+    .keyboard-container,
+    .continue-button {
+        max-width: 900px;
+    }
+}

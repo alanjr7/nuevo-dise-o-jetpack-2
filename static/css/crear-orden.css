@@ -6,55 +6,56 @@
 
 html, body {
     height: 100%;
-     margin: 0; /* Elimina cualquier margen predeterminado */
-    padding: 0; /* Elimina cualquier relleno predeterminado */
-    overflow: hidden; /* Evita el desplazamiento si algo excede el tamaño */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 body {
     background-image: url("../imagenes/fondo.png");
-    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-position: center center; /* Centra la imagen en ambas direcciones */
-    height: 100vh; /* Asegura que el fondo ocupe toda la altura de la ventana */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
     font-family: Arial, sans-serif;
     color: #000;
-       opacity: 0;
+    opacity: 0;
     transition: opacity 0.6s;
 }
+
 body.loaded {
     opacity: 1;
 }
+
 /* Contenedor principal de la aplicación */
 .app-container {
     position: relative;
     width: 100%;
     height: 100vh;
-
 }
-   /* APLICAR ESTILO FLEX Y ALINEACIÓN AL FORMULARIO
-           PARA QUE LOS ELEMENTOS INTERNOS SE CENTREN Y APILEN CORRECTAMENTE */
-        .main-content-left form {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centra horizontalmente el contenido del form */
-            width: 100%; /* Ocupa el ancho completo de su padre (main-content-left) */
-        }
 
-/* Fondo de la ciudad (Posición absoluta para quedar detrás) */
+/* APLICAR ESTILO FLEX Y ALINEACIÓN AL FORMULARIO */
+.main-content-left form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Fondo de la ciudad */
 .city-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Ajusta la ruta de tu imagen de fondo */
     background-image: url('../imagenes/fondo.png'); 
     background-size: cover;
     background-position: center;
-    opacity: 0.2; /* Ajusta la opacidad si es necesario */
+    opacity: 0.2;
     z-index: 0;
 }
+
 .key-spacer {
     flex: 1;
     height: 100%;
@@ -63,7 +64,7 @@ body.loaded {
     border: none;
 }
 
-/* Logo (Posición absoluta para la esquina) */
+/* Logo */
 .logo-container {
     position: absolute;
     top: 40px;
@@ -78,34 +79,31 @@ body.loaded {
     width: auto;
 }
 
-/* --- ESTRUCTURA FLEXBOX PRINCIPAL (75% / 25%) --- */
-
-/* Contenedor que divide la pantalla */
+/* --- ESTRUCTURA FLEXBOX PRINCIPAL (55% / 45%) --- */
 .split-container {
     position: relative;
-    z-index: 1; /* Por encima del fondo */
-    display: flex; /* Activa Flexbox layout */
+    z-index: 1;
+    display: flex;
     width: 100%;
-    height: 100%; /* Ocupa toda la altura */
-
+    height: 100%;
 }
 
-/* COLUMNA IZQUIERDA (75%) */
+/* COLUMNA IZQUIERDA (55%) */
 .main-content-left {
-    width: 55%; /* Ocupa el 75% del ancho */
+    width: 55%;
     display: flex;
-    flex-direction: column; /* Elementos uno debajo del otro */
-    justify-content: center; /* Centrado verticalmente */
-    align-items: center; /* Centrado horizontalmente */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
-/* COLUMNA DERECHA (25%) */
+/* COLUMNA DERECHA (45%) */
 .robot-container-right {
-    width: 45%; /* Ocupa el 25% del ancho */
+    width: 45%;
     display: flex;
-    justify-content: center; /* Centrado horizontal de la imagen */
-    align-items: center; /* Centrado vertical de la imagen */
+    justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
@@ -114,10 +112,10 @@ body.loaded {
 /* Título */
 .title {
     width: 100%;
-    font-size: 48px;
+    font-size: clamp(2.5rem, 4vw, 3.5rem); /* Tamaño responsivo */
     font-weight: 700;
     color: #000000;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -127,17 +125,17 @@ body.loaded {
     align-items: center;
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 20px 25px;
+    padding: 15px 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-    /* Ancho fijo para coincidir con el teclado, centrado por flexbox padre */
-    width: 90%; 
+    margin-bottom: 25px;
+    width: 90%;
+    max-width: 600px;
 }
 
 .input-icon {
-    font-size: 28px;
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
     color: #a0a0a0;
-    margin-right: 20px;
+    margin-right: 15px;
 }
 
 /* Estilo para el texto dentro de los inputs */
@@ -146,15 +144,10 @@ body.loaded {
     border: none;
     outline: none;
     background: transparent;
-    
-    /* TIPOGRAFÍA: Aseguramos que herede la fuente o usamos una específica */
-    font-family: Arial, sans-serif; /* O usa 'Inter', sans-serif; si cargaste esa fuente */
-    font-size: 28px; /* Tamaño grande y legible */
-    font-weight: 600; /* Un poco de negrita para que se vea sólido */
+    font-family: Arial, sans-serif;
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+    font-weight: 600;
     color: #333;
-    
-    /* Opcional: Centrar el texto si prefieres */
-    /* text-align: center; */ 
 }
 
 /* IMPORTANTE: Esto elimina las flechitas (spinners) feas de los inputs numéricos */
@@ -169,61 +162,61 @@ body.loaded {
     -moz-appearance: textfield;
 }
 
-/* Ajuste del placeholder (el texto de fondo) para que no se vea tan oscuro */
+/* Ajuste del placeholder */
 .virtual-input::placeholder {
     color: #a0a0a0;
     font-weight: 400;
-    font-size: 24px; /* Un poco más pequeño que el texto real */
+    font-size: clamp(1.3rem, 2vw, 1.5rem);
 }
+
 #recipient-name {
     border: none;
     outline: none;
-    font-size: 28px;
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
     color: #333;
     width: 100%;
     background: transparent;
 }
 
-/* Teclado Virtual (Con tus dimensiones fijas, pero sin posición absoluta) */
+/* Teclado Virtual */
 .keyboard-container {
     background-color: #ffffff;
-    border-radius: 27px; /* Tu radio de borde */
-    padding: 20px;
+    border-radius: 27px;
+    padding: 15px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 30px;
-    
-    /* Dimensiones fijas solicitadas */
+    gap: 8px;
+    margin-bottom: 25px;
     width: 90%;
-    height: 400px;
-    /* NOTA: Hemos quitado position: absolute, top y left para que se centre automáticamente */
+    max-width: 600px;
+    height: clamp(300px, 40vh, 400px); /* Altura responsiva */
 }
 
 .keyboard-row {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    flex: 1; /* Para distribuir el espacio verticalmente */
+    gap: 10px;
+    flex: 1;
     align-items: center;
 }
 
-/* Teclas (Ajustadas para caber en el contenedor fijo) */
+/* Teclas */
 .key {
-    flex: 1; /* Las teclas ocupan el espacio disponible */
-    height: 100%; /* Altura máxima de la fila */
-    max-height: 70px; /* Límite de altura para estética */
-    font-size: 24px;
+    flex: 1;
+    height: 100%;
+    max-height: 60px;
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
     font-weight: 600;
     color: #333;
     background-color: #ffffff;
-    border: 2px solid #000000;
+    border: 1px solid #000000;
     border-radius: 10px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 50px;
 }
 
 .key:active {
@@ -232,64 +225,163 @@ body.loaded {
 }
 
 .key-backspace {
-    flex: 1; /* Un poco más ancha */
+    flex: 1.2;
     background-color: #e0e0e0;
     border-color: #000000;
 }
 
 .key-space {
-    flex: 5; /* Barra espaciadora muy ancha */
+    flex: 5;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  
 }
 
 /* Botón Continuar */
 .continue-button {
-    width: 90%; /* Mismo ancho que input y teclado */
-    padding: 25px;
-    font-size: 32px;
+    width: 90%;
+    max-width: 600px;
+    padding: clamp(15px, 2.5vh, 20px);
+    font-size: clamp(1.5rem, 2.5vw, 1.8rem);
     font-weight: 600;
     color: #ffffff;
-   
- 
-  
-    font-family: 'Inter', sans-serif; /* Aplica la fuente especificada */
-    font-weight: 500; /* Medium */
-   
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    color: #fff; /* Color del texto */
-    background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%); /* Fondo degradado */
-    border: none; /* Sin bordes */
-    border-radius: 8px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    transition: all 0.2s ease; /* Suaviza las transiciones */
-    /* NOTA: Hemos quitado position: absolute */
-}
-/* Efecto al hacer clic */
-.continue-button button:active {
-    transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
-    animation-duration: 0ms; /* Animación instantánea */
+    gap: 10px;
+    background: linear-gradient(180deg, #3366FF 0%, #1F3D99 140.15%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
 }
 
-/* Efecto al pasar el mouse */
-.continue-button:hover {
-    background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%); /* Invierte el degradado */
+.continue-button:active {
+    transform: scale(0.95);
 }
 
 .continue-button:hover {
-    background-color: #234cb8;
+    background: linear-gradient(180deg, #1F3D99 0%, #3366FF 140.15%);
 }
 
 /* Imagen del robot */
 .robot-img {
-    /* Hacemos que la imagen sea responsiva dentro de su columna del 25% */
-    max-width: 100%; 
-   
+    max-width: 100%;
     width: 90%;
     height: auto;
+    max-height: 80vh;
     display: block;
     filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+    object-fit: contain;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1024px) {
+    .split-container {
+        flex-direction: column;
+    }
+    
+    .main-content-left,
+    .robot-container-right {
+        width: 100%;
+        height: 50%;
+    }
+    
+    .logo-container {
+        top: 20px;
+        left: 20px;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+    
+    .title {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .keyboard-container {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content-left {
+        padding: 10px;
+    }
+    
+    .title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    .input-group {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        width: 95%;
+    }
+    
+    .keyboard-container {
+        width: 95%;
+        height: 220px;
+        padding: 10px;
+        gap: 5px;
+    }
+    
+    .key {
+        min-height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .continue-button {
+        width: 95%;
+        padding: 15px;
+        font-size: 1.3rem;
+    }
+    
+    .robot-img {
+        width: 80%;
+        max-height: 70vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-container {
+        top: 15px;
+        left: 15px;
+    }
+    
+    .logo-img {
+        height: 35px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .input-icon {
+        font-size: 1.3rem;
+        margin-right: 10px;
+    }
+    
+    .virtual-input,
+    #recipient-name {
+        font-size: 1.3rem;
+    }
+    
+    .keyboard-container {
+        height: 200px;
+    }
+    
+    .key {
+        min-height: 35px;
+        font-size: 1rem;
+    }
+    
+    .continue-button {
+        font-size: 1.2rem;
+        padding: 12px;
+    }
 }

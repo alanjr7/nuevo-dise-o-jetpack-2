@@ -7,52 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/inicio.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
     <title>{{ _('Home') }}</title>
-    <style>
-        /* Inline styles for specific language selector tweaks */
-        .language-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 1000;
-            font-family: 'Inter', sans-serif;
-            border: 2px solid #e0e0e0;
-        }
-        
-        .language-selector a {
-            margin: 0 8px;
-            text-decoration: none;
-            color: #555;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        
-        .language-selector a:hover {
-            color: #0056b3;
-            background-color: #f8f9fa;
-            transform: translateY(-1px);
-        }
-        
-        .language-selector a.active {
-            color: #0056b3;
-            font-weight: 700;
-            background-color: #e3f2fd;
-            border: 1px solid #bbdefb;
-        }
-        
-        .language-selector span {
-            color: #ccc;
-            font-weight: 300;
-        }
-    </style>
+    
 </head>
 <body>
+  
+   
     <div class="container">
         <!-- Language selector -->
         <div class="language-selector">
@@ -91,6 +50,7 @@
                  alt="{{ _('Robot') }}">
         </div>
     </div>
+     
     <script>
         window.onload = () => {
             document.body.classList.add("loaded");
